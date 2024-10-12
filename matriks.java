@@ -30,7 +30,7 @@ public class matriks { //class
 
         for (int i =0; i< this.baris; i++){
             for (int j=0; j< this.kolom;j++){
-                this.mat[i][j] = mat [i][j];
+                this.mat[i][j] = mat[i][j];
             }
         }
     }
@@ -43,7 +43,7 @@ public class matriks { //class
         int baris = -1; //Inisiasi baris
         int kolom = -1;
 
-        while (input.hasNextLine()){
+        while(input.hasNextLine()){
             baris++;
             mat.add(new ArrayList<Double>()); //menambahkan ArrayList untuk tiap penambahan baris
             String input_baris = input.nextLine(); //baca baris
@@ -107,7 +107,7 @@ public class matriks { //class
     public static matriks Multiply (matriks M, double k){
         matriks result = new matriks (M.baris, M.kolom);
         for (int i=0;i<M.baris;i++){
-            for (int j=0; j< M. kolom; j++){
+            for (int j=0; j< M.kolom; j++){
                 result.mat[i][j]=M.mat[i][j]*k;
             }
         } return result;
@@ -126,7 +126,7 @@ public class matriks { //class
     }
 
     /* KELOMPOK OPERASI BARIS ELEMENTER */
-    public void Swap (int bar1, int bar2){
+    public static void Swap (int bar1, int bar2){
         double[] temp = mat[bar1];
         mat[bar1] = mat[bar2];
         mat[bar2] = temp;
@@ -153,5 +153,3 @@ public class matriks { //class
     }
 
 }
-
-
