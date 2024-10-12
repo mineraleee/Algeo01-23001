@@ -7,7 +7,7 @@ public class matriks { //class
     Scanner scan = new Scanner (System.in); //kelas untuk menerima input
     public int baris; //instance - atribut
     public int kolom;
-    public double[][]mat; //deklarasi array: mat[baris][kolom]
+    //public double[][]mat; //deklarasi array: mat[baris][kolom]
     public int barmin = 0;
     public int colmin = 0;
     public int barmax = 100;
@@ -126,13 +126,13 @@ public class matriks { //class
     }
 
     /* KELOMPOK OPERASI BARIS ELEMENTER */
-    public static void Swap (int bar1, int bar2){
+    public static void Swap (double[][]mat, int bar1, int bar2){
         double[] temp = mat[bar1];
         mat[bar1] = mat[bar2];
         mat[bar2] = temp;
     }
 
-    public void MultiplyBaris (int baris, double k){
+    public static void MultiplyBaris (int baris, double k){
         for (int i=0;i<kolom;i++){
             mat[baris][i]*=k;
         } 
