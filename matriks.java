@@ -23,7 +23,7 @@ public class matriks { //class
     }
 
     /* Salin matriks */
-    public void CopyMat (double [][] mat){
+    public matriks (double [][] mat){
         this.baris = mat.length;
         this.kolom = mat[0].length;
         this.mat = new double [this.baris][this.kolom];
@@ -156,5 +156,3 @@ public class matriks { //class
     }
 
 }
-
-
