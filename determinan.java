@@ -1,4 +1,4 @@
-public class Determinan {
+public class determinan {
     /* Menghitung determinan menggunakan OBE */
     static double determinantOBE (matriks M, int n){
 
