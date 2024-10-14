@@ -7,7 +7,7 @@ public class matriks { //class
     Scanner scan = new Scanner (System.in); //kelas untuk menerima input
     public int baris; //instance - atribut
     public int kolom;
-    //public double[][]mat; //deklarasi array: mat[baris][kolom]
+    public double[][]mat; //deklarasi array: mat[baris][kolom]
     public int barmin = 0;
     public int colmin = 0;
     public int barmax = 100;
@@ -23,14 +23,14 @@ public class matriks { //class
     }
 
     /* Salin matriks */
-    public void CopyMat (double [][] mat){
+    public matriks (double [][] mat){
         this.baris = mat.length;
         this.kolom = mat[0].length;
         this.mat = new double [this.baris][this.kolom];
 
         for (int i =0; i< this.baris; i++){
             for (int j=0; j< this.kolom;j++){
-                this.mat[i][j] = mat[i][j];
+                this.mat[i][j] = mat [i][j];
             }
         }
     }
@@ -43,7 +43,7 @@ public class matriks { //class
         int baris = -1; //Inisiasi baris
         int kolom = -1;
 
-        while(input.hasNextLine()){
+        while (input.hasNextLine()){
             baris++;
             mat.add(new ArrayList<Double>()); //menambahkan ArrayList untuk tiap penambahan baris
             String input_baris = input.nextLine(); //baca baris
@@ -81,6 +81,9 @@ public class matriks { //class
     public int GetLastIdxCol (matriks M){
         return M.kolom-1;
     }
+    public double GetElement(int m, int n){
+        return mat[m][n];
+    }
 
 
     /* BACA dan TULIS dengan INPUT/OUTPUT device */
@@ -107,7 +110,7 @@ public class matriks { //class
     public static matriks Multiply (matriks M, double k){
         matriks result = new matriks (M.baris, M.kolom);
         for (int i=0;i<M.baris;i++){
-            for (int j=0; j< M.kolom; j++){
+            for (int j=0; j< M. kolom; j++){
                 result.mat[i][j]=M.mat[i][j]*k;
             }
         } return result;
@@ -126,13 +129,13 @@ public class matriks { //class
     }
 
     /* KELOMPOK OPERASI BARIS ELEMENTER */
-    public static void Swap (double[][]mat, int bar1, int bar2){
+    public void Swap (int bar1, int bar2){
         double[] temp = mat[bar1];
         mat[bar1] = mat[bar2];
         mat[bar2] = temp;
     }
 
-    public static void MultiplyBaris (int baris, double k){
+    public void MultiplyBaris (int baris, double k){
         for (int i=0;i<kolom;i++){
             mat[baris][i]*=k;
         } 
@@ -152,4 +155,11 @@ public class matriks { //class
         } return I;
     }
 
+    public void Add(int m, int n, double k){
+        mat[m][n] += k;
+    }
+
+    public void ChangeVal(int m, int n, double k){
+        mat[m][n] = k;
+    }
 }

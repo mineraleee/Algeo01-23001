@@ -1,5 +1,5 @@
 public class GaussJordan {
-    public static int Operation(double[][] mat, int m, int n, int flag){
+    public static int OperasiGaussJordan(double[][] mat, int m, int n, int flag){
         int c;
         for(int i=0; i<m; i++){
             if(mat[i][i] == 0){ //jika nol, maka cari baris lain yang punya bilangan bukan nol untuk ditukar
@@ -46,7 +46,7 @@ public class GaussJordan {
         int m = 4;
         int n = 4;
         if(m >= n){
-            int flag = Operation(mat, m, n, 0);
+            int flag = OperasiGaussJordan(mat, m, n, 0);
             if(flag == 1){
                 flag = Cek(mat, m, n, flag);
                 if(flag == 2) System.out.println("Solusi tak berhingga");
