@@ -81,6 +81,9 @@ public class matriks { //class
     public int GetLastIdxCol (matriks M){
         return M.kolom-1;
     }
+    public double GetElement(int m, int n){
+        return mat[m][n];
+    }
 
 
     /* BACA dan TULIS dengan INPUT/OUTPUT device */
