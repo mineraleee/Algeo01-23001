@@ -63,33 +63,6 @@ public class InverseOBE {
         }
         return inverse;
     } 
-    /*
-    // Metode untuk menghitung adjoin
-    public matriks Adjoin() {
-        matriks adjoint = new matriks(M.baris, kolom);
-        for (int i = 0; i < baris; i++) {
-            for (int j = 0; j < kolom; j++) {
-                double cof = determinanKofaktor(Kofaktor(this, baris, i, j), baris - 1);
-                adjoint.mat[j][i] = cof * Math.pow(-1, i + j); // Transpose dan kofaktor
-            }
-        }
-        return adjoint;
-    }
-
-    public matriks inverseAdjoint() {
-        double determinan = determinanKofaktor(this, baris); // Hitung determinan
-        if (determinan == 0) {
-            throw new ArithmeticException("Matriks tidak dapat dibalik (determinannya nol).");
-        }
-        matriks adjoint = Adjoin(); // Hitung adjoin
-        matriks invers = new matriks(baris, kolom);
-        for (int i = 0; i < baris; i++) {
-            for (int j = 0; j < kolom; j++) {
-                invers.mat[i][j] = adjoint.mat[i][j] / determinan; // Membagi adjoin dengan determinan
-            }
-        }
-        return invers;
-    }*/
 }
 
 
