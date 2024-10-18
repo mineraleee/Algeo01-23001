@@ -1,5 +1,8 @@
-//Multiple Linier Regression
-public class RegresiLinierBerganda {
+public class RegresiKuadratikBerganda {
+    //buat matriks desain kuadratik
+    public static double[][] makematriksDesain(double[][] data_x, int n){
+        double[][] matriksDesain = new double[n][6]; 
+    }
     public static void main(String[] args){
         //data dari studi kasus
         double[][] data_x={
@@ -93,13 +96,6 @@ public class RegresiLinierBerganda {
                 if (j<3) System.out.print(" + ");
             }
             System.out.printf("=  %.4f\n",hasil_XTY[i][0]);
-        }
-
-        //menghitung koefisien regresi dengan penyelesaian SPL
-        
-    
-        /*  Estimasi nilai Nitrous Oxide
-        double estimasi = b[0] + b[1] * humidity + b[2] * temperature + b[3] * pressure;
-        System.out.printf("\nEstimasi nilai Nitrous Oxide: %.4f\n", estimasi);*/
+        }   
     }
 }
