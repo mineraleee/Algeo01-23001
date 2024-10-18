@@ -4,21 +4,28 @@ public class InverseOBE {
         for(int i=0; i<m; i++){
             if(mat[i][i] == 0){ //jika nol, maka cari baris lain yang punya bilangan bukan nol untuk ditukar
                 c = 1;
-                while(i+c < n && mat[i+c][c] == 0) c++; //cari baris dengan nilai bukan nol paling kiri
-                if(i+c == n){
+                while(i+c < m && mat[i+c][i] == 0) c++; //cari baris dengan nilai bukan nol paling kiri
+                if(i+c == m){
                     flag = 1; //pada satu kolom, nilainya nol semua sehingga tidak ada pivot
                     break;
                 }
-                for(int k=0; k<=n; k++){
+                for(int k=0; k<n; k++){
                     double tmp = mat[i][k];
                     mat[i][k] = mat[i+c][k];
                     mat[i+c][k] = tmp;
                 }
             }
+            
+            // Normalize the pivot row
+            double pivot = mat[i][i];
+            for (int k = 0; k < n; k++) {
+                mat[i][k] /= pivot; // Normalize the pivot row
+            }
+
             for(int j=0; j<m; j++){
                 if(i != j){
-                    double factor = mat[j][i]/mat[i][i];
-                    for(int k=0; k<=n; k++){
+                    double factor = mat[j][i];
+                    for(int k=0; k<n; k++){
                         mat[j][k] -= factor*mat[i][k];
                     } 
                 }
@@ -27,42 +34,60 @@ public class InverseOBE {
         return flag;
     }
 
-    public static matriks inverseGaussJordan(matriks M){
+    public static double[][] inverseGaussJordan(double[][] mat, int m, int n){
         int i,j;
         //membuat matriks baru dengan ukuran kolom 2 kalinya
-        matriks augmented= new matriks(M.baris, 2*M.kolom);
+        double[][] augmented = new double[m][2*n];
 
         //mengisi matriks augmented dengan menyalin matriks M pada sisi kiri
-        for (i=0;i<M.baris;i++){
-            for (j=0;j<M.kolom;j++){
-                augmented.mat[i][j]=M.mat[i][j];
+        for (i=0;i<m;i++){
+            for (j=0;j<n;j++){
+                augmented[i][j]= mat[i][j];
             }
         }
 
         //mengisi matriks augmented dengan matriks identitas pada sisi kanan
-        matriks identitas = matriks.Identity(M.baris);
-        for (i=0;i<M.baris;i++){
-            for (j=0;j<M.baris;j++){
-                augmented.mat[i][j+M.kolom]=identitas.mat[i][j];
+        double[][] identitas = new double[m][n];
+        for (i=0;i<n;i++){
+            identitas[i][i] = 1; }
+        for (i=0;i<m;i++){
+            for (j=0;j<n;j++){
+                augmented[i][j+n]=identitas[i][j];
             }
         }
-        //Pengoperasian eliminasi Gauss-Jordan sehingga sisi kiri menjadi matriks identitas
-        int flag = EliminasiGaussJordan(augmented.mat, M.baris, 2*M.baris, 0);
+        // Perform Gauss-Jordan elimination
+        int flag = EliminasiGaussJordan(augmented, m, 2 * n, 0);
 
-        // Check the flag to determine the status of the inversion process
-        if (flag != 0) {
-            throw new ArithmeticException("Matriks tidak memiliki invers.");
+        if (flag == 1) {
+            throw new IllegalArgumentException("Matrix is singular and cannot be inverted.");
         }
 
         //pembuatan matriks balikan dari M
-        matriks inverse= new matriks(M.baris, M.kolom);
-        for (i=0;i<M.baris;i++){
-            for (j=0;j<M.kolom;j++){
-                inverse.mat[i][j]=augmented.mat[i][j+M.kolom];//ambil matriks yang awalnya identtas atau yang sisi kanan
+        double[][] inverse = new double[m][n];
+        for (i=0;i<m;i++){
+            for (j=0;j<n;j++){
+                inverse[i][j]=augmented[i][j+n];//ambil matriks yang awalnya identtas atau yang sisi kanan
             }
         }
         return inverse;
     } 
+
+    public static void main(String[] args) {
+        double[][] mat = {{0,1,1}, {0,1,2}, {2,3,1}};
+        int m = 3;
+        int n = 3;
+
+        try {
+            double[][] inverse = inverseGaussJordan(mat, m, n);
+            // Print the inverse matrix
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    System.out.printf("%.2f ", inverse[i][j]);
+                }
+                System.out.println();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
-
-
