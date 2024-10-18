@@ -154,5 +154,4 @@ public class matriks { //class
             I.mat[i][i]=1; 
         } return I;
     }
-
 }
