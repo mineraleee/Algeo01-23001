@@ -4,12 +4,12 @@ public class GaussJordan {
         for(int i=0; i<m; i++){
             if(mat[i][i] == 0){ //jika nol, maka cari baris lain yang punya bilangan bukan nol untuk ditukar
                 c = 1;
-                while(i+c < n && mat[i+c][c] == 0) c++; //cari baris dengan nilai bukan nol paling kiri
+                while(i+c < n && mat[i+c][i] == 0) c++; //cari baris dengan nilai bukan nol paling kiri
                 if(i+c == n){
                     flag = 1; //pada satu kolom, nilainya nol semua sehingga tidak ada pivot
                     break;
                 }
-                for(int k=0; k<=n; k++){
+                for(int k=i; k<=n; k++){
                     double tmp = mat[i][k];
                     mat[i][k] = mat[i+c][k];
                     mat[i+c][k] = tmp;
@@ -39,12 +39,12 @@ public class GaussJordan {
     }
     public static void main(String[] args){
         //contoh matriks doang, masih error pas input matriks gatau kenapa
-        //double[][] mat = {{3.0, 2.0,-4.0, 3.0},{2.0, 3.0, 3.0, 15.0},{5.0, -3, 1.0, 14.0}}; //solusi unik
+        double[][] mat = {{3.0, 2.0,-4.0, 3.0},{2.0, 3.0, 3.0, 15.0},{5.0, -3, 1.0, 14.0}}; //solusi unik
         //double[][] mat = {{1.0, 1.0,2.0, 4.0},{2.0, -1.0, 1.0, 2.0},{1.0, 2.0, 3.0, 7.0}}; //tidak ada solusi
         //double[][] mat = {{1.0, 1.0,2.0, 4.0},{2.0, -1.0, 1.0, 2.0},{1.0, 2.0, 3.0, 6.0}};  //solusi tak berhingga
-        double[][] mat ={{1, 1, -1, -1, 1}, {2, 5, -7, -5, -2}, {2, -1, 1, 3, 4}, {5, 2, -4, 2, 6}};
-        int m = 4;
-        int n = 4;
+        //double[][] mat ={{1, 1, -1, -1, 1}, {2, 5, -7, -5, -2}, {2, -1, 1, 3, 4}, {5, 2, -4, 2, 6}};
+        int m = 3;
+        int n = 3;
         if(m >= n){
             int flag = OperasiGaussJordan(mat, m, n, 0);
             if(flag == 1){
