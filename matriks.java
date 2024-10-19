@@ -22,6 +22,16 @@ public class matriks { //class
         this.mat = new double [baris][kolom];
     }
 
+    public double[][] toDoubleArray() {
+        double[][] array = new double[this.baris][this.kolom]; // Membuat array baru
+        for (int i = 0; i < this.baris; i++) {
+            for (int j = 0; j < this.kolom; j++) {
+                array[i][j] = this.mat[i][j]; // Menyalin nilai dari matriks ke array
+            }
+        }
+        return array; // Mengembalikan array
+    }
+
     /* Salin matriks */
     public matriks (double [][] mat){
         this.baris = mat.length;
@@ -81,9 +91,14 @@ public class matriks { //class
     public int GetLastIdxCol (matriks M){
         return M.kolom-1;
     }
-    public double GetElement (int m, int n){
+    public double GetElement(int m, int n){
         return mat[m][n];
     }
+
+    public void SetElement (int m, int n, double value){
+        mat[m][n]= value;
+    }
+
 
     /* BACA dan TULIS dengan INPUT/OUTPUT device */
     /* Baca Matriks dari Input Manual */
@@ -93,16 +108,17 @@ public class matriks { //class
             for (int j=0; j<this.kolom;j++){
                 this.mat[i][j] = scan.nextDouble(); //input
             }
-        } System.out.println("\n"); //line baru
+        } System.out.println(); //line baru
     }
 
     /* Tampilkan Matriks ke Layar */
     public void PrintMat (){
         for (int i=0;i<this.baris;i++){
             for (int j=0;j<this.kolom;j++){
-                System.out.printf("%.2f",this.mat[i][j]); //printf karena ada format
+                System.out.printf("%.2f ",this.mat[i][j]); //printf karena ada format
             }
-        } System.out.printf("\n");
+            System.out.println();
+        } 
     }
 
     /* KELOMPOK OPERASI ARITMATIKA TERHADAP TYPE */
@@ -153,6 +169,4 @@ public class matriks { //class
             I.mat[i][i]=1; 
         } return I;
     }
-
 }
-
