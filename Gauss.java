@@ -58,7 +58,6 @@ public class Gauss {
                 cnt++;
             } else {
                 StringBuilder sb = new StringBuilder();
-                double sum = 0;
                 sb.append(String.format("%.2f", mat[i][n]/mat[i][i]));
     
                 for (int j = i + 1; j < n; j++) {
