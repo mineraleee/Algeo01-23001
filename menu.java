@@ -27,15 +27,47 @@ public class menu {
                 System.out.println("3. Metode Matriks Balikan" );
                 System.out.println("4. Kaidah Cramer" );
 
-                System.out.printf("Masukkan Pilihan Anda (1/2/etc):" );
-                int pilihan1 = scanner.nextInt();
-                switch (pilihan1) {
-                    case 1:
-                        
-                        break;
-                
-                    default:
-                        break;
+                while (pilihan1 != 1 && pilihan1 != 2 && pilihan1 != 3 && pilihan1 != 4){
+                    System.out.printf("Masukkan Pilihan Anda (1/2/etc):" );
+                    pilihan1 = scanner.nextInt();    
+                    switch (pilihan1) {
+                        case 1:
+                        System.out.println("Silakan pilih input matriks: " );
+                        System.out.println("1. Masukan dari Keyboard" );
+                        System.out.printf("2. Masukan dari File (.txt)" );
+
+                        System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        int pilihan3 = scanner.nextInt();
+                        if (pilihan3 == 1){
+                            System.out.print("Masukkan jumlah baris/kolom: ");
+                            int baris = scanner.nextInt();
+                            matriks Mat= new matriks(baris, baris);
+                            Mat.ReadMat();
+                            det = Determinan.determinantOBE(Mat,baris);
+                            System.out.printf("Determinan dari matriks tersebut: %.2f", det);
+                        } else if (pilihan3 == 2){
+                            System.out.printf("Masukkan nama file (akhiran .txt): ");
+                            String file_nama = scanner.nextLine();
+                            
+                            try {
+                                matriks Mat = new matriks(file_nama);
+                                int baris = Mat.baris;
+                                det = Determinan.determinantOBE(Mat,baris);
+                                System.out.printf("Determinan dari matriks tersebut: %.2f", det);
+                            } catch (FileNotFoundException e){
+                                System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
+                            }
+                        }
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 break;
             case 2:
@@ -200,8 +232,8 @@ public class menu {
                     try {
                         matriks Mat = new matriks(file_nama,4);
                         
-                        Double valueX = matriks.getX();
-                        Double valueY = matriks.getY();
+                        Double valueX = Mat.getX();
+                        Double valueY = Mat.getY();
                         Double hasil = Bicubic.hasil_Bicubic_Akhir(Mat, valueX, valueY);
                         System.out.printf("Hasil Binterpolasi Bicubic: %.2f", hasil );
 
