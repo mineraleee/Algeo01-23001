@@ -187,8 +187,70 @@ public class menu {
                                 System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
                             }
                         }
+                        break;
+                    case 2:
+                        System.out.println("Silakan pilih input matriks: " );
+                        System.out.println("1. Masukan dari Keyboard" );
+                        System.out.printf("2. Masukan dari File (.txt)" );
 
+                        System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        pilihan2=scanner.nextInt();
+                        if(pilihan2==1){
+                            System.out.print("Masukkan jumlah baris: ");
+                            int baris = scanner.nextInt();
+                            System.out.print("Masukkan jumlah kolom: ");
+                            int kolom = scanner.nextInt();
+                            
+                            while (baris!=kolom){
+                                System.out.print("Matriks harus merupakan matriks persegi");
+                                System.out.print("Masukkan jumlah baris: ");
+                                baris = scanner.nextInt();
+                                System.out.print("Masukkan jumlah kolom: ");
+                                kolom = scanner.nextInt();
+                            }
+                            double[][] mat = new double[baris][kolom];
+                            matriks Mat = new matriks(mat);
+                            Mat.ReadMat();
+                            try {
+                                matriks inverse = inverseADJ.inverseAdjoin(Mat);
+                                for (int i = 0; i < inverse.baris; i++) {
+                                    for (int j = 0; j < inverse.kolom; j++) {
+                                        System.out.printf("%.2f ", inverse.mat[i][j]);
+                                    }
+                                    System.out.println();
+                                }
+                            } catch (IllegalArgumentException e) {
+                                System.out.println(e.getMessage());
+                            }  
+                        } else if (pilihan2==2){
+                            System.out.printf("Masukkan nama file (akhiran .txt): ");
+                            String file_nama = scanner.nextLine();
 
+                            try {
+                                matriks Mat = new matriks(file_nama);
+                                int baris = Mat.baris;
+                                int kolom = Mat.kolom;
+                                if (baris!=kolom){
+                                    System.out.print("Matriks tidak memiliki invers karena bukan matriks persegi");
+                                    break;
+                                }
+
+                                try {
+                                    matriks inverse = inverseADJ.inverseAdjoin(Mat);
+                                    for (int i = 0; i < inverse.baris; i++) {
+                                        for (int j = 0; j < inverse.kolom; j++) {
+                                            System.out.printf("%.2f ", inverse.mat[i][j]);
+                                        }
+                                        System.out.println();
+                                    }
+                                } catch (IllegalArgumentException e) {
+                                    System.out.println(e.getMessage());
+                                }
+                            } catch (FileNotFoundException e){
+                                System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
+                            }
+                        }
+                        break;
                 }
 
             break;
@@ -225,7 +287,6 @@ public class menu {
                         System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
                     }
             break;
-
             default:
                 break;
         }
