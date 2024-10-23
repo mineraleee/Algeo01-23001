@@ -36,24 +36,25 @@ public class matriks { //class
     }
 
     /* Matriks dari Pembacaan File */
-    public void ReadMatriksFile(String file_name) throws FileNotFoundException {// Membaca Matriks dari sebuah file
+    public void matriks(String file_name) throws FileNotFoundException {// Membaca Matriks dari sebuah file
         ArrayList<ArrayList<Double>> mat = new ArrayList<ArrayList<Double>>();
         File file = new File(file_name); //membuat objek file
-        Scanner input = new Scanner(file); //membaca isi dari file
-        int baris = -1; //Inisiasi baris
-        int kolom = -1;
+        Scanner scan = new Scanner(file); //membaca isi dari file
 
-        while (input.hasNextLine()){
+        int baris = -1; //Inisiasi baris
+
+        while (scan.hasNextLine()){
             baris++;
             mat.add(new ArrayList<Double>()); //menambahkan ArrayList untuk tiap penambahan baris
-            String input_baris = input.nextLine(); //baca baris
+            String input_baris = scan.nextLine(); //baca baris
             Scanner scan_baris = new Scanner(input_baris);
             while (scan_baris.hasNextDouble()) {
                 Double element = scan_baris.nextDouble();
                 mat.get(baris).add(element);
             }
+            scan_baris.close();
         }
-
+        scan.close();
         if (baris == -1) {
             System.out.println("Matriks tidak dapat dibaca"); 
         } else {
@@ -103,7 +104,8 @@ public class matriks { //class
             for (int j=0;j<this.kolom;j++){
                 System.out.printf("%.2f",this.mat[i][j]); //printf karena ada format
             }
-        } System.out.printf("\n");
+        System.out.printf("\n");
+        }
     }
 
     /* KELOMPOK OPERASI ARITMATIKA TERHADAP TYPE */
