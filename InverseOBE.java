@@ -72,8 +72,8 @@ public class InverseOBE {
         return inverse;
     } 
 
-    public static void main(String[] args) {
-        double[][] mat = {{0,1,1}, {0,1,2}, {2,3,1}};
+    /*public static void main(String[] args) {
+        double[][] mat = {{3,5,7}, {3,3,3}, {2,3,1}};
         int m = 3;
         int n = 3;
 
@@ -89,5 +89,5 @@ public class InverseOBE {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-    }
+    }*/
 }

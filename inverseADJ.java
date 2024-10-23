@@ -12,6 +12,7 @@ public class inverseADJ {
         }
         return transpose;
     }
+
     public static matriks matriksKofaktor(matriks M){
         int i,j;
         //membuat matriks baru dengan ukuran matriks M untuk menyimpan hasil kofaktor
@@ -21,10 +22,10 @@ public class inverseADJ {
         for (i=0;i<M.baris;i++){
             for (j=0;j<M.kolom;j++){
                 //menghitung minor entri dari M dengan menghilangkan baris i dan kolom j
-                matriks minorEntri=Kofaktor(M, M.baris, i, j);//memanggil fungsi dari kelas Determinan
+                matriks minorEntri=new matriks(Determinan.Kofaktor(M,M.baris, i, j));//memanggil fungsi
 
                 //menghitung determinan dari matriks minorEntri
-                double determinanMinorEntri=determinanKofaktor(minorEntri, minorEntri.baris);
+                double determinanMinorEntri=Determinan.determinanKofaktor(minorEntri, minorEntri.baris);
 
                 //penentuan tanda (+/-) untuk kofaktor
                 int tanda;
@@ -37,17 +38,22 @@ public class inverseADJ {
                 kofaktor.mat[i][j]=tanda*determinanMinorEntri;
             }
         }
+        return kofaktor;
     }
     public static matriks inverseAdjoin(matriks M) {
         int i,j;
         //mencari det(M)
-        double determinan = determinanKofaktor(M,M.baris);
+        double determinan = Determinan.determinanKofaktor(M,M.baris);
+        if (determinan == 0) {
+            throw new IllegalArgumentException("Matriks tidak memiliki invers (determinan = 0).");
+        }
 
-        //mencari adj(M)
-        matriks adjoin = Transpose(M);
+        //mencari adj(kofaktor)
+        matriks kofaktor = matriksKofaktor(M);
+        matriks adjoin = Transpose(kofaktor);
 
         //membuat matriks baru ukuran matriks M untuk menyimpan hasil inverse
-        matriks invers = new matriks(M.baris, M.kolom);
+        matriks invers = new matriks(new double[M.baris][M.kolom]);
 
         //mengisi matriks inverse:membagi matriks adjoin dengan determinan
         for (i = 0; i < M.baris; i++) {
@@ -57,4 +63,22 @@ public class inverseADJ {
         }
         return invers;
     }
+    
+    /*public static void main(String[] args) {
+        double[][] data = {{3,5,7}, {3,3,3}, {2,3,1}};
+        matriks mat = new matriks(data);
+
+        try {
+            matriks inverse = inverseAdjoin(mat);
+            // Print the inverse matrix
+            for (int i = 0; i < inverse.baris; i++) {
+                for (int j = 0; j < inverse.kolom; j++) {
+                    System.out.printf("%.2f ", inverse.mat[i][j]);
+                }
+                System.out.println();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }*/
 }

@@ -12,6 +12,9 @@ public class matriks { //class
     public int colmin = 0;
     public int barmax = 100;
     public int colmax = 100;
+    public double[] lastRow;
+    public double x;
+    public double y;
 
 
     /*KONSTRUKTOR*/  //method
@@ -22,51 +25,117 @@ public class matriks { //class
         this.mat = new double [baris][kolom];
     }
 
+
+    public double[][] toDoubleArray() {
+        double[][] array = new double[this.baris][this.kolom]; // Membuat array baru
+        for (int i = 0; i < this.baris; i++) {
+            for (int j = 0; j < this.kolom; j++) {
+                array[i][j] = this.mat[i][j]; // Menyalin nilai dari matriks ke array
+            }
+        }
+        return array; // Mengembalikan array
+    }
+
+
     /* Salin matriks */
-    public void CopyMat (double [][] mat){
+    public matriks (double [][] mat){
         this.baris = mat.length;
         this.kolom = mat[0].length;
         this.mat = new double [this.baris][this.kolom];
 
         for (int i =0; i< this.baris; i++){
             for (int j=0; j< this.kolom;j++){
-                this.mat[i][j] = mat [i][j];
+                this.mat[i][j] = mat[i][j];
             }
         }
     }
 
     /* Matriks dari Pembacaan File */
-    public void ReadMatriksFile(String file_name) throws FileNotFoundException {// Membaca Matriks dari sebuah file
+    public matriks(String file_name) throws FileNotFoundException {// Membaca Matriks dari sebuah file
         ArrayList<ArrayList<Double>> mat = new ArrayList<ArrayList<Double>>();
         File file = new File(file_name); //membuat objek file
-        Scanner input = new Scanner(file); //membaca isi dari file
-        int baris = -1; //Inisiasi baris
-        int kolom = -1;
+        Scanner scan = new Scanner(file); //membaca isi dari file
 
-        while (input.hasNextLine()){
+        int baris = -1; //Inisiasi baris
+
+        while (scan.hasNextLine()){
             baris++;
             mat.add(new ArrayList<Double>()); //menambahkan ArrayList untuk tiap penambahan baris
-            String input_baris = input.nextLine(); //baca baris
+            String input_baris = scan.nextLine(); //baca baris
             Scanner scan_baris = new Scanner(input_baris);
             while (scan_baris.hasNextDouble()) {
                 Double element = scan_baris.nextDouble();
                 mat.get(baris).add(element);
             }
+            scan_baris.close();
         }
-
+        scan.close();
         if (baris == -1) {
             System.out.println("Matriks tidak dapat dibaca"); 
         } else {
             this.kolom = mat.get(0).size(); //menghitung jumlah kolom
             this.baris = mat.size();
+
             this.mat = new double[this.baris][this.kolom];
-            for (int i = barmin; i < this.baris; i++) {
-                for (int j = colmin; j < this.kolom; j++) {
+            for (int i = 0; i < this.baris; i++) {
+                for (int j = 0; j < this.kolom; j++) {
                     this.mat[i][j] = mat.get(i).get(j); //duplikasi matriks
                 }
             }
         }
     }
+
+
+    public matriks(String file_name, int n) throws FileNotFoundException {// Membaca Matriks dari sebuah file
+        double[][] mat;
+
+        ArrayList<ArrayList<Double>> matList = new ArrayList<ArrayList<Double>>();
+        File file = new File(file_name); //membuat objek file
+        Scanner scan = new Scanner(file); //membaca isi dari file
+        double[] lastRow =  new double [2];
+
+        for (int i = 0; i < 4 && scan.hasNextLine(); i++) {
+            String input_baris = scan.nextLine();
+            Scanner scan_baris = new Scanner(input_baris);
+            ArrayList<Double> row = new ArrayList<>();
+
+            while (scan_baris.hasNextDouble()) {
+                row.add(scan_baris.nextDouble());
+            }
+            matList.add(row);
+            scan_baris.close();
+        }
+
+        this.mat = new double[4][4];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                this.mat[i][j] = matList.get(i).get(j);
+            }
+        }
+
+        if (scan.hasNextLine()) {
+            String input_baris = scan.nextLine();
+            Scanner scan_baris = new Scanner(input_baris);
+            if (scan_baris.hasNextDouble()) {
+                this.x = scan_baris.nextDouble(); // Ambil nilai x
+            }
+            if (scan_baris.hasNextDouble()) {
+                this.y = scan_baris.nextDouble(); // Ambil nilai y
+            }
+            scan_baris.close();
+        }
+
+        scan.close();
+    }
+
+    public double getX() {
+        return this.x;
+    }
+
+    public double getY() {
+        return this.y;
+    }
+
 
     /*SELEKTOR*/
     public int GetFirstIdxBar (matriks M){
@@ -80,6 +149,12 @@ public class matriks { //class
     } 
     public int GetLastIdxCol (matriks M){
         return M.kolom-1;
+    }
+    public double GetElement(int m, int n){
+        return mat[m][n];
+    }
+    public void SetElement (int m, int n, double value){
+        mat[m][n]= value;
     }
 
 
@@ -100,8 +175,12 @@ public class matriks { //class
             for (int j=0;j<this.kolom;j++){
                 System.out.printf("%.2f",this.mat[i][j]); //printf karena ada format
             }
-        } System.out.printf("\n");
+        System.out.printf("\n");
+        }
     }
+
+    /* Simpan ke File */
+
 
     /* KELOMPOK OPERASI ARITMATIKA TERHADAP TYPE */
     public static matriks Multiply (matriks M, double k){
@@ -151,7 +230,4 @@ public class matriks { //class
             I.mat[i][i]=1; 
         } return I;
     }
-
 }
-
-
