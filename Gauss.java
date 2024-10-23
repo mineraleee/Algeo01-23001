@@ -1,33 +1,30 @@
-//PENTING, DISINI AKU BUAT MXN ITU CUMA MATRIKS PERSAMAAN TANPA KONSTANTA
-//MAKANYA UNTUK KOLOM, AKU KADANG BUAT PERULANGANNYA JADI <= n
-//SAMA  HALNYA DENGAN GAUSS-JORDAN
-//TAPI KALO INPUTNYA MXN INCLUDE KONSTANTA NANTI TINGGAL DI ADJUST AJA KOK
-
 public class Gauss {
-    public static void OperasiGauss(double[][] mat, int m, int n){
-        for(int j=0; j<n; j++){
-            int pivot = j;
-            for(int i=j+1; i<m; i++){
-                if(Math.abs(mat[i][j]) > Math.abs(mat[pivot][j])) pivot = i;
+    public static int OperasiGauss(double[][] mat, int m, int n, int flag){
+        int c;
+        for(int i=0; i<m; i++){
+            if(mat[i][i] == 0){ //jika nol, maka cari baris lain yang punya bilangan bukan nol untuk ditukar
+                c = 1;
+                while(i+c < n && mat[i+c][i] == 0) c++; //cari baris dengan nilai bukan nol paling kiri
+                if(i+c == n){
+                    flag = 1; //pada satu kolom, nilainya nol semua sehingga tidak ada pivot
+                    break;
+                }
+                for(int k=i; k<=n; k++){
+                    double tmp = mat[i][k];
+                    mat[i][k] = mat[i+c][k];
+                    mat[i+c][k] = tmp;
+                }
             }
-            if(mat[pivot][j] == 0) continue;
-            else{
-                if(pivot != j){
-                    for(int k=j; k<=n; k++){
-                        double tmp = mat[j][k];
-                        mat[j][k] = mat[pivot][k];
-                        mat[pivot][k] = tmp;
-                    }
-                }    
-            }
-
-            for(int i=j+1; i<m; i++){
-                double factor = mat[i][j]/mat[j][j];
-                for(int k=j; k<=n; k++){
-                    mat[i][k] -= factor*mat[j][k];
+            for(int j=0; j<m; j++){
+                if(i != j){
+                    double factor = mat[j][i]/mat[i][i];
+                    for(int k=0; k<=n; k++){
+                        mat[j][k] -= factor*mat[i][k];
+                    } 
                 }
             }
         }
+        return flag;
     }
     public static int Cek(double[][] mat, int m, int n, int flag){
         for(int j=0; j<=n; j++){
@@ -40,39 +37,65 @@ public class Gauss {
         }
         return flag;
     }
-    public static void Substitusi(double[][] mat, int m, int n, double[] x){
-        for(int i=n-1; i>=0; i--){
-            double jml = 0;
-            for(int j=i+1; j<n; j++){
-                jml += mat[i][j]*x[j];
+    public static void SubstitusiParametrik(double[][] mat, int m, int n) {
+        boolean flag;
+        int cnt = 0;
+        char param = 's'; //variabel untuk nama parameter
+    
+        String[] sol = new String[n]; //array untuk menyimpan solusi sebagai string
+    
+        for (int i = n - 1; i >= 0; i--) {
+            flag = true;
+            for (int j = 0; j < n; j++) {
+                if (mat[i][j] != 0) {
+                    flag = false;
+                    break;
+                }
             }
-            x[i] = (mat[i][n]-jml)/mat[i][i];
+            if (flag) {
+                sol[i] = String.valueOf(param); //variabel parameter misal 's', 't', dll.
+                param++;
+                cnt++;
+            } else {
+                StringBuilder sb = new StringBuilder();
+                double sum = 0;
+                sb.append(String.format("%.2f", mat[i][n]/mat[i][i]));
+    
+                for (int j = i + 1; j < n; j++) {
+                    if (mat[i][j] != 0) {
+                        if(mat[i][j]/mat[i][i] == 1) sb.append(" - ").append(sol[j]);
+                        else if(mat[i][j] >= 0) sb.append(" - ").append(String.format("%.2f", mat[i][j]/mat[i][i])).append(sol[j]);
+                        else sb.append(" + ").append(String.format("%.2f", -1*mat[i][j]/mat[i][i])).append(sol[j]);
+                    }
+                }
+                //if(mat[i][i] != 1)sb.append(") / ").append(String.format("%.2f", mat[i][i])); 
+                sol[i] = sb.toString();
+            }
         }
-    }
-
+        // Output solusi parametrik
+        for (int i = 0; i < n; i++) {
+            System.out.println("x" + (i + 1) + " = " + sol[i]);
+        }
+    }      
     public static void main(String[] args){
         //contoh matriks doang, masih error pas input matriks gatau kenapa
-        double[][] mat = {{3.0, 2.0,-4.0, 3.0},{2.0, 3.0, 3.0, 15.0},{5.0, -3, 1.0, 14.0}}; //solusi unik
+        //double[][] mat = {{3.0, 2.0,-4.0, 3.0},{2.0, 3.0, 3.0, 15.0},{5.0, -3, 1.0, 14.0}}; //solusi unik
         //double[][] mat = {{1.0, 1.0,2.0, 4.0},{2.0, -1.0, 1.0, 2.0},{1.0, 2.0, 3.0, 7.0}}; //tidak ada solusi
-        //double[][] mat = {{1.0, 1.0,2.0, 4.0},{2.0, -1.0, 1.0, 2.0},{1.0, 2.0, 3.0, 6.0}};  //solusi tak berhingga
-        //double[][] mat = {{3.0, 2.0,-4.0, 3.0},{2.0, 3.0, 3.0, 15.0}};
-        //double[][] mat ={{1, 1, -1, -1, 1}, {2, 5, -7, -5, -2}, {2, -1, 1, 3, 4}, {5, 2, -4, 2, 6}}; //error fixed
+        double[][] mat = {{1.0, 1.0,2.0, 4.0},{2.0, -1.0, 1.0, 2.0},{1.0, 2.0, 3.0, 6.0}};  //solusi tak berhingga
+        //double[][] mat ={{1, 1, -1, -1, 1}, {2, 5, -7, -5, -2}, {2, -1, 1, 3, 4}, {5, 2, -4, 2, 6}};
         int m = 3;
-        int n = 3; //mxn sudah include b
-        if(m >= n){
-            double[] x = new double[n+5]; //nambahin aja buat jaga jaga kalo overflow
-            OperasiGauss(mat, m, n);
-            int flag = Cek(mat, m, n, 1);
-            if(flag == 1){
-                Substitusi(mat, m, n, x);
-                System.out.println("Solusi dari SPL adalah:");
-                for (int i = 0; i < n; i++) {
-                    System.out.printf("%.2f\n", x[i]);
-                }
-            }else{
-                if(flag == 2) System.out.println("Solusi tak berhingga");
-                else if(flag == 3) System.out.println("Tidak ada solusi");
+        int n = 3;
+        int flag = OperasiGauss(mat, m, n, 0);
+        if(flag == 1){
+            flag = Cek(mat, m, n, flag);
+            if(flag == 2){
+                SubstitusiParametrik(mat, m, n);
             }
-        }else System.out.println("Solusi tak berhingga");
+            else if(flag == 3) System.out.println("Tidak ada solusi.");
+        }else{
+            for (int i=0; i<m; i++) {
+                System.out.printf("x%d = %.2f\n", i+1, mat[i][n]/mat[i][i]); //konstanta dibagi dengan pivot
+            }
+        }
     }
 }
