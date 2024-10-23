@@ -12,6 +12,9 @@ public class matriks { //class
     public int colmin = 0;
     public int barmax = 100;
     public int colmax = 100;
+    public double[] lastRow;
+    public double x;
+    public double y;
 
 
     /*KONSTRUKTOR*/  //method
@@ -21,6 +24,18 @@ public class matriks { //class
         this.kolom = kolom;
         this.mat = new double [baris][kolom];
     }
+
+
+    public double[][] toDoubleArray() {
+        double[][] array = new double[this.baris][this.kolom]; // Membuat array baru
+        for (int i = 0; i < this.baris; i++) {
+            for (int j = 0; j < this.kolom; j++) {
+                array[i][j] = this.mat[i][j]; // Menyalin nilai dari matriks ke array
+            }
+        }
+        return array; // Mengembalikan array
+    }
+
 
     /* Salin matriks */
     public matriks (double [][] mat){
@@ -36,7 +51,7 @@ public class matriks { //class
     }
 
     /* Matriks dari Pembacaan File */
-    public void matriks(String file_name) throws FileNotFoundException {// Membaca Matriks dari sebuah file
+    public matriks(String file_name) throws FileNotFoundException {// Membaca Matriks dari sebuah file
         ArrayList<ArrayList<Double>> mat = new ArrayList<ArrayList<Double>>();
         File file = new File(file_name); //membuat objek file
         Scanner scan = new Scanner(file); //membaca isi dari file
@@ -60,14 +75,67 @@ public class matriks { //class
         } else {
             this.kolom = mat.get(0).size(); //menghitung jumlah kolom
             this.baris = mat.size();
+
             this.mat = new double[this.baris][this.kolom];
-            for (int i = barmin; i < this.baris; i++) {
-                for (int j = colmin; j < this.kolom; j++) {
+            for (int i = 0; i < this.baris; i++) {
+                for (int j = 0; j < this.kolom; j++) {
                     this.mat[i][j] = mat.get(i).get(j); //duplikasi matriks
                 }
             }
         }
     }
+
+
+    public matriks(String file_name, int n) throws FileNotFoundException {// Membaca Matriks dari sebuah file
+        double[][] mat;
+
+        ArrayList<ArrayList<Double>> matList = new ArrayList<ArrayList<Double>>();
+        File file = new File(file_name); //membuat objek file
+        Scanner scan = new Scanner(file); //membaca isi dari file
+        double[] lastRow =  new double [2];
+
+        for (int i = 0; i < 4 && scan.hasNextLine(); i++) {
+            String input_baris = scan.nextLine();
+            Scanner scan_baris = new Scanner(input_baris);
+            ArrayList<Double> row = new ArrayList<>();
+
+            while (scan_baris.hasNextDouble()) {
+                row.add(scan_baris.nextDouble());
+            }
+            matList.add(row);
+            scan_baris.close();
+        }
+
+        this.mat = new double[4][4];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                this.mat[i][j] = matList.get(i).get(j);
+            }
+        }
+
+        if (scan.hasNextLine()) {
+            String input_baris = scan.nextLine();
+            Scanner scan_baris = new Scanner(input_baris);
+            if (scan_baris.hasNextDouble()) {
+                this.x = scan_baris.nextDouble(); // Ambil nilai x
+            }
+            if (scan_baris.hasNextDouble()) {
+                this.y = scan_baris.nextDouble(); // Ambil nilai y
+            }
+            scan_baris.close();
+        }
+
+        scan.close();
+    }
+
+    public double getX() {
+        return this.x;
+    }
+
+    public double getY() {
+        return this.y;
+    }
+
 
     /*SELEKTOR*/
     public int GetFirstIdxBar (matriks M){
@@ -84,6 +152,9 @@ public class matriks { //class
     }
     public double GetElement(int m, int n){
         return mat[m][n];
+    }
+    public void SetElement (int m, int n, double value){
+        mat[m][n]= value;
     }
 
 
@@ -107,6 +178,9 @@ public class matriks { //class
         System.out.printf("\n");
         }
     }
+
+    /* Simpan ke File */
+
 
     /* KELOMPOK OPERASI ARITMATIKA TERHADAP TYPE */
     public static matriks Multiply (matriks M, double k){
