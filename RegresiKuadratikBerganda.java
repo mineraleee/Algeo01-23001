@@ -1,5 +1,7 @@
 //Multiple Quadratic Regression
 public class RegresiKuadratikBerganda {
+    //fungsi untuk kombinasi 
+
     //fungsi untuk mengoperasikan eliminasi gauss
     public static void EliminasiGauss(double[][] mat, int m, int n, double[] x){
         for(int j=0; j<n-1; j++){
@@ -37,16 +39,30 @@ public class RegresiKuadratikBerganda {
     //fungsi untuk perhitungan regresi kuadratik berganda
     //fungsi untuk menjadikan matriks seperti rumus X
     //buat matriks sebanyak N untuk tiap sampel data dengan isi elemen adalah perkalian baris paling atas dan kolom paling kiri
-    //fungsi membangun satu matriks sampel(u,v)
-    public static double[][] buildSampelMatriks(double u, double v){
-        int i,j;
-        double[][] sampelMatriks= new double[6][6]; // 6 kali 6 karena 2 variabel
+    //fungsi membangun satu matriks sampel dari data_X
+    public static double[][] buildSampelMatriks(double[] variabel){
+        int i,j,dimensi,n,idx;
+        n=variabel.length;//jumlah variabel
+        dimensi = 1+n+((n*(n+1))/2); //ukuran matriks dengan 1 konstan N, n variabel linier, n variabel kuadrat, dan nC2 variabel interaksi
+        double[][] sampelMatriks= new double[dimensi][dimensi]; // 6 kali 6 karena 2 variabel
         //inisialisasi elemen pinggir
-        double[] pinggir={1,u,v,u*u,u*v,v*v};
+        double[] pinggir= new double[dimensi];
 
         //isi matriks
-        for (i=0;i<6;i++){
-            for (j=0;j<6;j++){
+        //menghitung elemen matriks pinggir (1,x1,x2,...)
+        pinggir[0]=1;//1 konstan N
+        for (i=0;i<n;i++){
+            pinggir[i+1]=variabel[i]; //n variabel linier
+        }
+        idx=n+1;
+        for (i=0;i<n;i++){
+            for(j=i;j<n;j++){
+                pinggir[idx]=variabel[i]*variabel[j];
+                idx++;
+            }
+        }
+        for (i=0;i<dimensi;i++){
+            for (j=0;j<dimensi;j++){
                 sampelMatriks[i][j]=pinggir[i]*pinggir[j];
             }
         }
@@ -67,83 +83,95 @@ public class RegresiKuadratikBerganda {
     public static double[][] calculateHasilX(double[][] data_X){
         int i;
         int N = data_X.length; //untuk mengetahui jumlah sampel
-        double[][] hasil_X= new double[6][6];
+        int n= data_X[0].length;//jumlah variabel linier 
+        int dimensi = 1+n+((n*(n+1))/2); //ukuran matriks dengan 1 konstan N, n variabel linier, n variabel kuadrat, dan nC2 variabel interaksi
+        double[][] hasil_X= new double[dimensi][dimensi];
 
         for (i=0;i<N;i++){
-            double u= data_X[i][0]; //u yang kiri
-            double v= data_X[i][1]; //v yang kanan
-            double[][] sampelMatriks=buildSampelMatriks(u, v);
+            double[][] sampelMatriks=buildSampelMatriks(data_X[i]);
             hasil_X=tambahMatriks(hasil_X, sampelMatriks);
         }
         return hasil_X;
     }
     //hitung matriks hasil_Y
     public static double[] calculateHasilY(double[][] data_X,double[] data_Y){
-        int i;
+        int i,idx;
         int N = data_X.length; //untuk mengetahui jumlah sampel
-        double[] hasil_Y= new double[6];
+        int n= data_X[0].length;//jumlah variabel linier 
+        int dimensi = 1+n+((n*(n+1))/2); //ukuran matriks dengan 1 konstan N, n variabel linier, n variabel kuadrat, dan nC2 variabel interaksi
+        double[] hasil_Y= new double[dimensi];
 
-        for (i=0;i<N;i++){
-            double u= data_X[i][0]; //u yang kiri
-            double v= data_X[i][1]; //v yang kanan
-            hasil_Y[0]+=data_Y[i];
-            hasil_Y[1]+=data_Y[i]*u;
-            hasil_Y[2]+=data_Y[i]*v;
-            hasil_Y[3]+=data_Y[i]*u*u;
-            hasil_Y[4]+=data_Y[i]*u*v;
-            hasil_Y[5]+=data_Y[i]*v*v;
+        for (i = 0; i < N; i++) {
+            double[] variabel = data_X[i];
+            hasil_Y[0] += data_Y[i]; // konstanta
+            idx = 1;
+            for (int j = 0; j < n; j++) {
+                hasil_Y[idx] += data_Y[i] * variabel[j]; // linear terms
+                idx++;
+            }
+            for (int j = 0; j < n; j++) {
+                for (int k = j; k < n; k++) {
+                    hasil_Y[idx] += data_Y[i] * variabel[j] * variabel[k]; // bilinear and quadratic terms
+                    idx++;
+                }
+            }
         }
+
         return hasil_Y;
     }
     public static double[] multipleQuadraticRegression(double[][] data_X, double[] data_Y){
         int i,j;
+        int N = data_X.length; //untuk mengetahui jumlah sampel
+        int n= data_X[0].length;//jumlah variabel linier 
+        int dimensi = 1+n+((n*(n+1))/2); //ukuran matriks dengan 1 konstan N, n variabel linier, n variabel kuadrat, dan nC2 variabel interaksi
         double[][] hasil_X = calculateHasilX(data_X);
         double[] hasil_Y = calculateHasilY(data_X, data_Y);
         //menghitung koefisien regresi dengan penyelesaian SPL
         //menjadikan matriks hasil_X dan hasil_Y ke augmented matriks
-        double[][] augmented = new double[6][7]; 
-        //mengisi matriks augmented dengan menyalin matriks hasil_X pada sisi kiri
-        for (i=0;i<6;i++){
-            for (j=0;j<6;j++){
+        double[][] augmented = new double[dimensi][dimensi+1]; 
+        //mengisi matriks augmented
+        for (i=0;i<dimensi;i++){
+            for (j=0;j<dimensi;j++){
                 augmented[i][j]= hasil_X[i][j];
             }
         }
         //mengisi matriks augmented dengan menyalin matriks hasi_Y pada sisi kanan
-        for (i=0;i<6;i++){
+        for (i=0;i<dimensi;i++){
             for (j=0;j<1;j++){
-                augmented[i][j+(6)]= hasil_Y[i];
+                augmented[i][j+dimensi]= hasil_Y[i];
             }
         }
 
         //matriks baru untuk simpan solusi
-        double[] x = new double[6];
-        EliminasiGauss(augmented, 6, 7, x);
+        double[] koefisien = new double[dimensi];
+        EliminasiGauss(augmented, dimensi, dimensi, koefisien);
 
-        return x;
+        return koefisien;
     }
-    public static void main(String[] args){
+}
+    /*public static void main(String[] args){
         //data dari studi kasus
         double[][] data_X={
-            {72.4,76.3},
-            {41.6,70.3},
-            {34.3,77.1},
-            {35.1,68.0},
-            {10.7,79.0},
-            {12.9,67.4},
-            {8.3,66.8},
-            {20.1,76.9},
-            {72.2,77.7},
-            {24.0,67.7},
-            {23.2,76.8},
-            {47.4,86.6},
-            {31.5,76.9},
-            {10.6,86.3},
-            {11.2,86.0},
-            {73.3,76.3},
-            {75.4,77.9},
-            {96.6,78.7},
-            {107.4,86.8},
-            {54.9,70.9}
+            {72.4,76.3,29.18},
+            {41.6,70.3,29.35},
+            {34.3,77.1,29.24},
+            {35.1,68.0,29.27},
+            {10.7,79.0,29.78},
+            {12.9,67.4,29.39},
+            {8.3,66.8,29.69},
+            {20.1,76.9,29.48},
+            {72.2,77.7,29.09},
+            {24.0,67.7,29.60},
+            {23.2,76.8,29.38},
+            {47.4,86.6,29.35},
+            {31.5,76.9,29.63},
+            {10.6,86.3,29.56},
+            {11.2,86.0,29.48},
+            {73.3,76.3,29.40},
+            {75.4,77.9,29.28},
+            {96.6,78.7,29.29},
+            {107.4,86.8,29.03},
+            {54.9,70.9,29.37}
         };
 
         double[] data_Y = {
@@ -168,20 +196,44 @@ public class RegresiKuadratikBerganda {
             0.82,
             0.95
         };
+        int n= data_X[0].length;//jumlah variabel linier 
+        int dimensi = 1+n+((n*(n+1))/2); //ukuran matriks dengan 1 konstan N, n variabel linier, n variabel kuadrat, dan nC2 variabel interaksi
         double[] koefisien= multipleQuadraticRegression(data_X, data_Y);
-        System.out.println("x1=u");
-        System.out.println("x2=v");
-        System.out.println("x3=u²");
-        System.out.println("x1=uv");
-        System.out.println("x1=v²");
-        System.out.printf("f(x) = %.5f", koefisien[0]); // konstanta/intersep
-        for (int i = 1; i < koefisien.length; i++) {
+        String[] peubah = {"p","q","r","s","t","u", "v", "w",}; // Daftar variabel, bisa ditambah sesuai kebutuhan
+        String[] variabel= new String[dimensi-1];
+
+        // Cetak representasi kombinasi variabel
+        int i,j,idx;
+        for (i=0;i<n;i++){
+            variabel[i]=peubah[i]; //n variabel linier
+        }
+        idx=n;
+        for (i=0;i<n;i++){
+            for(j=i;j<n;j++){
+                if (peubah[i]==peubah[j]){
+                    variabel[idx]=peubah[i]+"^2";
+                }
+                else{
+                    variabel[idx]=peubah[i]+peubah[j];
+                }
+                idx++;
+            }
+        }
+
+        for (i = 0; i < dimensi-1; i++) {
+            System.out.println("x"+(i+1)+ " = " + variabel[i]);
+        }
+
+        // Cetak polinomial dengan kombinasi tersebut
+        System.out.printf("f(x) = %.4f", koefisien[0]); // Konstanta/intersep
+
+        for (i = 1; i < koefisien.length; i++) {
             if (koefisien[i] >= 0) {
-                System.out.printf(" + %.5fx%d", koefisien[i], i);
+                System.out.printf(" + %.4fx%d", koefisien[i], i);
             } else {
-                System.out.printf(" - %.5fx%d", Math.abs(koefisien[i]), i);
+                System.out.printf(" - %.4fx%d", Math.abs(koefisien[i]), i);
             }
         }
         System.out.println();
     }
-}
+}*/

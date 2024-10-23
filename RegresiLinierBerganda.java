@@ -102,6 +102,8 @@ public class RegresiLinierBerganda {
 
         return x;
     }
+}
+/*
     public static void main(String[] args){
         //data dari studi kasus
         double[][] data_X={
@@ -160,4 +162,4 @@ public class RegresiLinierBerganda {
         }
         System.out.println();
     }
-}
+}*/
