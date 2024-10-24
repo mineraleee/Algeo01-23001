@@ -402,7 +402,6 @@ public class menu {
 
                         System.out.printf("Masukkan Pilihan Anda (1/2): " );
                         int pilihan3 = scanner.nextInt();
-                        scanner.nextLine();
                         if (pilihan3 == 1){
                             System.out.print("Masukkan jumlah baris/kolom: ");
                             int baris = scanner.nextInt();
@@ -435,7 +434,6 @@ public class menu {
 
                                 System.out.println();
                                 System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
-                                scanner.nextLine();
                                 String file = scanner.nextLine();
                                 if (file.equals("y")) {
                                     String str = String.format("%.2f", det);
@@ -467,9 +465,11 @@ public class menu {
                             Mat.ReadMat();
                             det = Determinan.determinanKofaktor(Mat,baris);
                             System.out.printf("Determinan dari matriks tersebut: %.2f", det);
+
                             System.out.println();
                             System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
                             scanner.nextLine();
+
                             String file = scanner.nextLine();
                             if (file.equals("y")) {
                                 String str = String.format("%.2f", det);
@@ -491,7 +491,6 @@ public class menu {
 
                                 System.out.println();
                                 System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
-                                scanner.nextLine();
                                 String file = scanner.nextLine();
                                 if (file.equals("y")) {
                                     String str = String.format("%.2f", det);
