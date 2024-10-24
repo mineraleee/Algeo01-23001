@@ -402,7 +402,7 @@ public class menu {
                         Double valueX = Mat.getX();
                         Double valueY = Mat.getY();
                         Double hasil = Bicubic.hasil_Bicubic_Akhir(Mat, valueX, valueY);
-                        System.out.printf("Hasil Binterpolasi Bicubic: %.2f", hasil );
+                        System.out.printf("Hasil Binterpolasi Bicubic: %.2f\n", hasil );
 
                         System.out.printf("Apakah ingin menyimpann hasil operasi ke file? (y/n)" );
                         String file = scanner.nextLine();
@@ -424,6 +424,7 @@ public class menu {
                         System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
                     }
             break;
+
             default:
                 break;
         }
