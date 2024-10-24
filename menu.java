@@ -391,7 +391,6 @@ public class menu {
                         System.out.printf("2. Masukan dari File (.txt)\n" );
 
                         System.out.printf("Masukkan Pilihan Anda (1/2): " );
-                        scanner.nextLine();
                         pilihan2=scanner.nextInt();
                         scanner.nextLine();
                         while (pilihan2 != 1 && pilihan2 != 2){
@@ -411,8 +410,9 @@ public class menu {
                             matriks Mat = new matriks(mat);
                             Mat.ReadMat();
                             mat = Mat.toDoubleArray();
+                            double[][] inverse = new double[baris][baris];
                             try {
-                                double[][] inverse = InverseOBE.inverseGaussJordan(mat, baris, baris);
+                                inverse = InverseOBE.inverseGaussJordan(mat, baris, baris);
                                 for (int i = 0; i < baris; i++) {
                                     for (int j = 0; j < baris; j++) {
                                         System.out.printf("%.2f ", inverse[i][j]);
@@ -422,6 +422,18 @@ public class menu {
                             } catch (IllegalArgumentException e) {
                                 System.out.println(e.getMessage());
                             }  
+                            System.out.println();
+                            System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                            scanner.nextLine();
+                            String file = scanner.nextLine();
+                            if (file.equals("y")) {
+                                String str = matriks.matriksToString(inverse);
+                                try{
+                                    matriks.simpan(str);
+                                } catch (IOException e){
+                                    System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                                }
+                            }
                         } else if (pilihan2==2){
                             System.out.printf("Masukkan nama file (akhiran .txt): ");
                             String file_nama = scanner.nextLine();
@@ -435,9 +447,9 @@ public class menu {
                                     System.out.print("Matriks tidak memiliki invers karena bukan matriks persegi");
                                     break;
                                 }
-
+                                double[][] inverse = new double[baris][baris];
                                 try {
-                                    double[][] inverse = InverseOBE.inverseGaussJordan(mat, baris, kolom);
+                                    inverse = InverseOBE.inverseGaussJordan(mat, baris, kolom);
                                     for (int i = 0; i < baris; i++) {
                                         for (int j = 0; j < kolom; j++) {
                                             System.out.printf("%.2f ", inverse[i][j]);
@@ -446,6 +458,17 @@ public class menu {
                                     }
                                 } catch (IllegalArgumentException e) {
                                     System.out.println(e.getMessage());
+                                }
+                                System.out.println();
+                                System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                                String file = scanner.nextLine();
+                                if (file.equals("y")) {
+                                    String str = matriks.matriksToString(inverse);
+                                    try{
+                                        matriks.simpan(str);
+                                    } catch (IOException e){
+                                        System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                                    }
                                 }
                             } catch (FileNotFoundException e){
                                 System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
@@ -458,7 +481,6 @@ public class menu {
                         System.out.printf("2. Masukan dari File (.txt)" );
 
                         System.out.println("Masukkan Pilihan Anda (1/2):" );
-                        scanner.nextLine();
                         pilihan2=scanner.nextInt();
                         scanner.nextLine();
                         while (pilihan2 != 1 && pilihan2 != 2){
@@ -477,8 +499,9 @@ public class menu {
                             double[][] mat = new double[baris][baris];
                             matriks Mat = new matriks(mat);
                             Mat.ReadMat();
+                            matriks inverse = new matriks(baris, baris);
                             try {
-                                matriks inverse = inverseADJ.inverseAdjoin(Mat);
+                                inverse = inverseADJ.inverseAdjoin(Mat);
                                 for (int i = 0; i < inverse.baris; i++) {
                                     for (int j = 0; j < inverse.kolom; j++) {
                                         System.out.printf("%.2f ", inverse.mat[i][j]);
@@ -487,7 +510,20 @@ public class menu {
                                 }
                             } catch (IllegalArgumentException e) {
                                 System.out.println(e.getMessage());
-                            }  
+                            } 
+                            double[][] invers = inverse.toDoubleArray();
+                            System.out.println();
+                            System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                            scanner.nextLine();
+                            String file = scanner.nextLine();
+                            if (file.equals("y")) {
+                                String str = matriks.matriksToString(invers);
+                                try{
+                                    matriks.simpan(str);
+                                } catch (IOException e){
+                                    System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                                }
+                            }
                         } else if (pilihan2==2){
                             System.out.printf("Masukkan nama file (akhiran .txt): ");
                             String file_nama = scanner.nextLine();
@@ -500,9 +536,9 @@ public class menu {
                                     System.out.print("Matriks tidak memiliki invers karena bukan matriks persegi");
                                     break;
                                 }
-
+                                matriks inverse = new matriks(baris, kolom);
                                 try {
-                                    matriks inverse = inverseADJ.inverseAdjoin(Mat);
+                                    inverse = inverseADJ.inverseAdjoin(Mat);
                                     for (int i = 0; i < inverse.baris; i++) {
                                         for (int j = 0; j < inverse.kolom; j++) {
                                             System.out.printf("%.2f ", inverse.mat[i][j]);
@@ -511,6 +547,18 @@ public class menu {
                                     }
                                 } catch (IllegalArgumentException e) {
                                     System.out.println(e.getMessage());
+                                }
+                                double[][] invers = inverse.toDoubleArray();
+                                System.out.println();
+                                System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                                String file = scanner.nextLine();
+                                if (file.equals("y")) {
+                                    String str = matriks.matriksToString(invers);
+                                    try{
+                                        matriks.simpan(str);
+                                    } catch (IOException e){
+                                        System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                                    }
                                 }
                             } catch (FileNotFoundException e){
                                 System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
@@ -693,6 +741,17 @@ public class menu {
                                 }
                             }
                             System.out.println();
+                            System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                            scanner.nextLine();
+                            String file = scanner.nextLine();
+                            if (file.equals("y")) {
+                                String str = matriks.matriksToString(koefisien);
+                                try{
+                                    matriks.simpan(str);
+                                } catch (IOException e){
+                                    System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                                }
+                            }
                         } else if (pilihan2==2){
                             System.out.printf("Masukkan nama file (akhiran .txt): ");
                             String file_nama = scanner.nextLine();
@@ -702,16 +761,13 @@ public class menu {
                                 int baris = Mat.baris;
                                 int kolom = Mat.kolom;
                                 double[][] data_X = new double[baris][kolom-1];
-                                for (int i=0;i<baris;i++){
-                                    for (int j=0;j<kolom-1;j++){
-                                        data_X[i][j]= Mat.mat[i][j];
-                                    }
-                                }
+                                
                                 double[] data_Y = new double[baris];
-                                for (int i=0;i<baris;i++){
-                                    for (int j=0;j<1;j++){
-                                        data_Y[i]= Mat.mat[i][j];
+                                for (int i = 0; i < baris; i++) {
+                                    for (int j = 0; j < kolom - 1; j++) {
+                                        data_X[i][j] = Mat.mat[i][j]; // Akses matriks augmented
                                     }
+                                    data_Y[i] = Mat.mat[i][kolom - 1]; // Akses kolom terakhir sebagai Y
                                 }
 
                                 double[] koefisien= RegresiLinierBerganda.multipleLinierRegression(data_X, data_Y);
@@ -724,6 +780,16 @@ public class menu {
                                     }
                                 }
                                 System.out.println();
+                                System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                                String file = scanner.nextLine();
+                                if (file.equals("y")) {
+                                    String str = matriks.matriksToString(koefisien);
+                                    try{
+                                        matriks.simpan(str);
+                                    } catch (IOException e){
+                                        System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                                    }
+                                }
                             } catch (FileNotFoundException e){
                                 System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
                             }
@@ -805,6 +871,17 @@ public class menu {
                                 }
                             }
                             System.out.println();
+                            System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                            scanner.nextLine();
+                            String file = scanner.nextLine();
+                            if (file.equals("y")) {
+                                String str = matriks.matriksToString(koefisien);
+                                try{
+                                    matriks.simpan(str);
+                                } catch (IOException e){
+                                    System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                                }
+                            }
                         } else if (pilihan2==2){
                             System.out.printf("Masukkan nama file (akhiran .txt): ");
                             String file_nama = scanner.nextLine();
@@ -865,6 +942,16 @@ public class menu {
                                     }
                                 }
                                 System.out.println();
+                                System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                                String file = scanner.nextLine();
+                                if (file.equals("y")) {
+                                    String str = matriks.matriksToString(koefisien);
+                                    try{
+                                        matriks.simpan(str);
+                                    } catch (IOException e){
+                                        System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                                    }
+                                }
                             } catch (FileNotFoundException e){
                                 System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
                             }
