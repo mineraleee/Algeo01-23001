@@ -179,23 +179,24 @@ public class menu {
                 System.out.println("1. Determinan Menggunakan OBE" );
                 System.out.println("2. Determinan Kofaktor" );
 
-                System.out.printf("Masukkan Pilihan Anda (1/2/etc):" );
+                System.out.printf("Masukkan Pilihan Anda (1/2/etc): " );
                 int pilihan2 = scanner.nextInt();
                 scanner.nextLine();
                 double det = 0;
 
                 while (pilihan2 != 1 && pilihan2 != 2){
-                    System.out.printf("Masukkan Pilihan Anda (1/2/etc):" );
+                    System.out.println("Masukkan Pilihan Anda (1/2/etc): " );
                     pilihan2 = scanner.nextInt();
                 }
                 switch (pilihan2) {
                     case 1:
                         System.out.println("Silakan pilih input matriks: " );
                         System.out.println("1. Masukan dari Keyboard" );
-                        System.out.printf("2. Masukan dari File (.txt)" );
+                        System.out.println("2. Masukan dari File (.txt)" );
 
-                        System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        System.out.printf("Masukkan Pilihan Anda (1/2): " );
                         int pilihan3 = scanner.nextInt();
+                        scanner.nextLine();
                         if (pilihan3 == 1){
                             System.out.print("Masukkan jumlah baris/kolom: ");
                             int baris = scanner.nextInt();
@@ -203,6 +204,18 @@ public class menu {
                             Mat.ReadMat();
                             det = Determinan.determinantOBE(Mat,baris);
                             System.out.printf("Determinan dari matriks tersebut: %.2f", det);
+                            System.out.println();
+                            System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                            scanner.nextLine();
+                            String file = scanner.nextLine();
+                            if (file.equals("y")) {
+                                String str = String.format("%.2f", det);
+                                try{
+                                    matriks.simpan(str);
+                                } catch (IOException e){
+                                    System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                                }
+                            }
                         } else if (pilihan3 == 2){
                             System.out.printf("Masukkan nama file (akhiran .txt): ");
                             String file_nama = scanner.nextLine();
@@ -212,6 +225,20 @@ public class menu {
                                 int baris = Mat.baris;
                                 det = Determinan.determinantOBE(Mat,baris);
                                 System.out.printf("Determinan dari matriks tersebut: %.2f", det);
+
+                                System.out.println();
+                                System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                                scanner.nextLine();
+
+                                String file = scanner.nextLine();
+                                if (file.equals("y")) {
+                                    String str = String.format("%.2f", det);
+                                    try{
+                                        matriks.simpan(str);
+                                    } catch (IOException e){
+                                        System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                                    }
+                                }
                             } catch (FileNotFoundException e){
                                 System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
                             }
@@ -220,10 +247,12 @@ public class menu {
                     case 2:
                         System.out.println("Silakan pilih input matriks: " );
                         System.out.println("1. Masukan dari Keyboard" );
-                        System.out.printf("2. Masukan dari File (.txt)" );
+                        System.out.println("2. Masukan dari File (.txt)" );
 
-                        System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        System.out.printf("Masukkan Pilihan Anda (1/2): " );
                         int pilihan4 = scanner.nextInt();
+                        scanner.nextLine();
+
                         if (pilihan4 == 1){
                             System.out.print("Masukkan jumlah baris/kolom: ");
                             int baris = scanner.nextInt();
@@ -232,22 +261,48 @@ public class menu {
                             Mat.ReadMat();
                             det = Determinan.determinanKofaktor(Mat,baris);
                             System.out.printf("Determinan dari matriks tersebut: %.2f", det);
+
+                            System.out.println();
+                            System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                            scanner.nextLine();
+                            String file = scanner.nextLine();
+                            if (file.equals("y")) {
+                                String str = String.format("%.2f", det);
+                                try{
+                                    matriks.simpan(str);
+                                } catch (IOException e){
+                                    System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                                }
+                            }
+
                         } else if (pilihan4 == 2){
                             System.out.printf("Masukkan nama file (akhiran .txt): ");
                             String file_nama = scanner.nextLine();
-                            
                             try {
                                 matriks Mat = new matriks(file_nama);
                                 int baris = Mat.baris;
                                 det = Determinan.determinanKofaktor(Mat,baris);
                                 System.out.printf("Determinan dari matriks tersebut: %.2f", det);
+
+                                System.out.println();
+                                System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                                scanner.nextLine();
+                                String file = scanner.nextLine();
+                                if (file.equals("y")) {
+                                    String str = String.format("%.2f", det);
+                                    try{
+                                        matriks.simpan(str);
+                                    } catch (IOException e){
+                                        System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                                    }
+                                }
                             } catch (FileNotFoundException e){
                                 System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
                             }
                         }
                         break;
                 }
-
+            break;
             case 3:
                 System.out.println("1. Metode OBE" );
                 System.out.println("2. Metode Matriks Adjoin" );
@@ -394,37 +449,68 @@ public class menu {
             case 4:
             break;
             case 5:
-                System.out.printf("Silakan masukan file text (.txt): " );
-                String file_nama = scanner.nextLine();        
+                System.out.println("Silakan pilih input matriks: " );
+                System.out.println("1. Masukan dari Keyboard" );
+                System.out.println("2. Masukan dari File (.txt)" );
+
+                System.out.printf("Masukkan Pilihan Anda (1/2): " );
+                int pilihan3 = scanner.nextInt();
+                scanner.nextLine();
+                if (pilihan3 == 1){
+                    matriks Mat= new matriks(4, 4);
+                    Mat.ReadMat();
+                    System.out.printf("Masukkan x: " );
+                    Double x = scanner.nextDouble();
+                    scanner.nextLine();
+
+                    System.out.printf("Masukkan y:" );
+                    Double y = scanner.nextDouble();
+                    scanner.nextLine();
+
+                    Double hasil = Bicubic.hasil_Bicubic_Akhir(Mat, x, y);
+                    System.out.printf("Hasil Binterpolasi Bicubic: %.2f\n", hasil );
+                    
+                    System.out.println();
+                    System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                    scanner.nextLine();
+                        String file = scanner.nextLine();
+                        if (file.equals("y")) {
+                            String str = String.format("%.2f", hasil);
+                            try{
+                                matriks.simpan(str);
+                            } catch (IOException e){
+                                System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                            }
+                        }
+                    
+                } else if (pilihan3 == 2){
+                    System.out.printf("Silakan masukan file text (.txt): " );
+                    String file_nama = scanner.nextLine();     
                     try {
                         matriks Mat = new matriks(file_nama,4);
-                        
                         Double valueX = Mat.getX();
                         Double valueY = Mat.getY();
                         Double hasil = Bicubic.hasil_Bicubic_Akhir(Mat, valueX, valueY);
                         System.out.printf("Hasil Binterpolasi Bicubic: %.2f\n", hasil );
 
-                        System.out.printf("Apakah ingin menyimpann hasil operasi ke file? (y/n)" );
+                        System.out.println();
+                        System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                        scanner.nextLine();
+
                         String file = scanner.nextLine();
-                        if (file.equals("y")){
-                            String fileContent = "";
-                            while (scanner.hasNextLine()){
-                                fileContent = fileContent.concat(scanner.nextLine()+"\n");
-                            }
-                            try {
-                                FileWriter writer = new FileWriter ("newfile.txt");
-                                writer.write(fileContent);
-                                writer.close();
+                        if (file.equals("y")) {
+                            String str = String.format("%.2f", hasil);
+                            try{
+                                matriks.simpan(str);
                             } catch (IOException e){
-                                System.out.println("Terjadi kesalahan. " + e.getMessage());
+                                System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
                             }
-                    
                         }
                     } catch (FileNotFoundException e){
                         System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
                     }
+                }
             break;
-
             default:
                 break;
         }

@@ -1,7 +1,9 @@
 import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 
 public class matriks { //class
     Scanner scan = new Scanner (System.in); //kelas untuk menerima input
@@ -137,6 +139,18 @@ public class matriks { //class
     }
 
 
+    public static void simpan (String content) throws IOException{
+        Scanner scan = new Scanner(System.in);
+        System.out.printf("Simpan dengan Nama File (sertakan akhiran .txt): ");
+        String fileSimpan = scan.nextLine();
+
+        FileWriter writer = new FileWriter(fileSimpan);
+        writer.write(content);
+        writer.close();
+        scan.close();
+    }
+
+
     /*SELEKTOR*/
     public int GetFirstIdxBar (matriks M){
         return barmin;
@@ -166,7 +180,7 @@ public class matriks { //class
             for (int j=0; j<this.kolom;j++){
                 this.mat[i][j] = scan.nextDouble(); //input
             }
-        } System.out.println("\n"); //line baru
+        }
     }
 
     /* Tampilkan Matriks ke Layar */
