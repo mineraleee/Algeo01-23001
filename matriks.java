@@ -84,49 +84,48 @@ public class matriks { //class
             }
         }
     }
-
-
     public matriks(String file_name, int n) throws FileNotFoundException {// Membaca Matriks dari sebuah file
-        double[][] mat;
-
-        ArrayList<ArrayList<Double>> matList = new ArrayList<ArrayList<Double>>();
+       
+        ArrayList<ArrayList<Double>> mat = new ArrayList<ArrayList<Double>>();
         File file = new File(file_name); //membuat objek file
         Scanner scan = new Scanner(file); //membaca isi dari file
-        double[] lastRow =  new double [2];
 
-        for (int i = 0; i < 4 && scan.hasNextLine(); i++) {
-            String input_baris = scan.nextLine();
+        for (int i = 0; i < n && scan.hasNextLine(); i++) {
+            mat.add(new ArrayList<Double>()); //menambahkan ArrayList untuk tiap penambahan baris
+            String input_baris = scan.nextLine(); //baca baris
             Scanner scan_baris = new Scanner(input_baris);
-            ArrayList<Double> row = new ArrayList<>();
-
             while (scan_baris.hasNextDouble()) {
-                row.add(scan_baris.nextDouble());
+                Double element = scan_baris.nextDouble();
+                mat.get(i).add(element);
             }
-            matList.add(row);
             scan_baris.close();
         }
-
-        this.mat = new double[4][4];
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                this.mat[i][j] = matList.get(i).get(j);
+        if (mat.size()==0) {
+            System.out.println("Matriks tidak dapat dibaca"); 
+        } else {
+            this.kolom = mat.get(0).size(); //menghitung jumlah kolom
+            this.baris = mat.size();
+            this.mat = new double[this.baris][this.kolom];
+            for (int i = barmin; i < this.baris; i++) {
+                for (int j = colmin; j < this.kolom; j++) {
+                    this.mat[i][j] = mat.get(i).get(j); //duplikasi matriks
+                }
             }
         }
 
         if (scan.hasNextLine()) {
-            String input_baris = scan.nextLine();
-            Scanner scan_baris = new Scanner(input_baris);
-            if (scan_baris.hasNextDouble()) {
-                this.x = scan_baris.nextDouble(); // Ambil nilai x
+            String inputxy = scan.nextLine();
+            Scanner scan_selanjutnya = new Scanner(inputxy);
+            if (scan_selanjutnya.hasNextDouble()) {
+                x = scan_selanjutnya.nextDouble(); // Ambil nilai x
             }
-            if (scan_baris.hasNextDouble()) {
-                this.y = scan_baris.nextDouble(); // Ambil nilai y
+            if (scan_selanjutnya.hasNextDouble()) {
+                y = scan_selanjutnya.nextDouble(); // Ambil nilai y
             }
-            scan_baris.close();
+            scan_selanjutnya.close();
         }
-
         scan.close();
-    }
+    }  
 
     public double getX() {
         return this.x;
@@ -135,7 +134,6 @@ public class matriks { //class
     public double getY() {
         return this.y;
     }
-
 
     /*SELEKTOR*/
     public int GetFirstIdxBar (matriks M){

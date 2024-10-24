@@ -38,6 +38,7 @@ public class menu {
                         System.out.printf("2. Masukan dari File (.txt)" );
 
                         System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        scanner.nextLine();
                         int pilihan3 = scanner.nextInt();
                         if (pilihan3 == 1){
                             System.out.print("Masukkan jumlah baris/kolom: ");
@@ -87,6 +88,7 @@ public class menu {
                         System.out.printf("2. Masukan dari File (.txt)" );
 
                         System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        scanner.nextLine();
                         pilihan3 = scanner.nextInt();
                         if (pilihan3 == 1){
                             System.out.print("Masukkan jumlah baris/kolom: ");
@@ -94,16 +96,16 @@ public class menu {
                             matriks Mat = new matriks(baris, baris);
                             Mat.ReadMat();
                             double[][] mat = Mat.toDoubleArray();
-                            int flag = GaussJordan.OperasiGaussJordan(mat, Mat.baris, Mat.kolom, 0);
+                            int flag = GaussJordan.OperasiGaussJordan(mat, Mat.baris, Mat.kolom-1, 0);
                             if(flag == 1){
-                                flag = GaussJordan.Cek(mat, Mat.baris, Mat.kolom, flag);
+                                flag = GaussJordan.Cek(mat, Mat.baris, Mat.kolom-1, flag);
                                 if(flag == 2){
-                                    GaussJordan.SubstitusiParametrik(mat, Mat.baris, Mat.kolom);
+                                    GaussJordan.SubstitusiParametrik(mat, Mat.baris, Mat.kolom-1);
                                 }
                                 else if(flag == 3) System.out.println("Tidak ada solusi.");
                             }else{
                                 for (int i=0; i<Mat.baris; i++) {
-                                    System.out.printf("x%d = %.2f\n", i+1, mat[i][Mat.kolom]/mat[i][i]); //konstanta dibagi dengan pivot
+                                    System.out.printf("x%d = %.2f\n", i+1, mat[i][Mat.kolom-1]/mat[i][i]); //konstanta dibagi dengan pivot
                                 }
                             }
                         }else if(pilihan3 == 2){
@@ -113,16 +115,16 @@ public class menu {
                             try {
                                 matriks Mat = new matriks(file_nama);
                                 double[][] mat = Mat.toDoubleArray();
-                                int flag = GaussJordan.OperasiGaussJordan(mat, Mat.baris, Mat.kolom, 0);
+                                int flag = GaussJordan.OperasiGaussJordan(mat, Mat.baris, Mat.kolom-1, 0);
                                 if(flag == 1){
-                                    flag = GaussJordan.Cek(mat, Mat.baris, Mat.kolom, flag);
+                                    flag = GaussJordan.Cek(mat, Mat.baris, Mat.kolom-1, flag);
                                     if(flag == 2){
-                                        GaussJordan.SubstitusiParametrik(mat, Mat.baris, Mat.kolom);
+                                        GaussJordan.SubstitusiParametrik(mat, Mat.baris, Mat.kolom-1);
                                     }
                                     else if(flag == 3) System.out.println("Tidak ada solusi.");
                                 }else{
                                     for (int i=0; i<Mat.baris; i++) {
-                                        System.out.printf("x%d = %.2f\n", i+1, mat[i][Mat.kolom]/mat[i][i]); //konstanta dibagi dengan pivot
+                                        System.out.printf("x%d = %.2f\n", i+1, mat[i][Mat.kolom-1]/mat[i][i]); //konstanta dibagi dengan pivot
                                     }
                                 }
                             } catch (FileNotFoundException e){
@@ -131,18 +133,19 @@ public class menu {
                         }
                         break;
                     case 3:
-                       break;
+                        break;
                     case 4:
                         System.out.println("Silakan pilih input matriks: " );
                         System.out.println("1. Masukan dari Keyboard" );
                         System.out.printf("2. Masukan dari File (.txt)" );
 
                         System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        scanner.nextLine();
                         pilihan3 = scanner.nextInt();
                         if (pilihan3 == 1){
                             System.out.print("Masukkan jumlah baris/kolom: ");
                             int baris = scanner.nextInt();
-                            matriks Mat = new matriks(baris, baris);
+                            matriks Mat = new matriks(baris, baris+1);
                             Mat.ReadMat();
                             double[] x = new double[Mat.baris+5];
                             int flag = Cramer.OperasiCramer(Mat, Mat.baris, x, 0);
@@ -195,11 +198,12 @@ public class menu {
                         System.out.printf("2. Masukan dari File (.txt)" );
 
                         System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        scanner.nextLine();
                         int pilihan3 = scanner.nextInt();
                         if (pilihan3 == 1){
                             System.out.print("Masukkan jumlah baris/kolom: ");
                             int baris = scanner.nextInt();
-                            matriks Mat= new matriks(baris, baris);
+                            matriks Mat = new matriks(baris, baris);
                             Mat.ReadMat();
                             det = Determinan.determinantOBE(Mat,baris);
                             System.out.printf("Determinan dari matriks tersebut: %.2f", det);
@@ -223,6 +227,7 @@ public class menu {
                         System.out.printf("2. Masukan dari File (.txt)" );
 
                         System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        scanner.nextLine();
                         int pilihan4 = scanner.nextInt();
                         if (pilihan4 == 1){
                             System.out.print("Masukkan jumlah baris/kolom: ");
@@ -251,10 +256,7 @@ public class menu {
             case 3:
                 System.out.println("1. Metode OBE" );
                 System.out.println("2. Metode Matriks Adjoin" );
-
-                System.out.printf("Masukkan Pilihan Anda (1/2):" );
                 pilihan1 = scanner.nextInt();
-                scanner.nextLine();
                 while (pilihan1 != 1 && pilihan1 != 2){
                     System.out.printf("Masukkan Pilihan Anda (1/2):" );
                     pilihan1 = scanner.nextInt();
@@ -266,6 +268,7 @@ public class menu {
                         System.out.printf("2. Masukan dari File (.txt)" );
 
                         System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        scanner.nextLine();
                         pilihan2=scanner.nextInt();
                         if(pilihan2==1){
                             System.out.print("Masukkan jumlah baris: ");
@@ -331,6 +334,7 @@ public class menu {
                         System.out.printf("2. Masukan dari File (.txt)" );
 
                         System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        scanner.nextLine();
                         pilihan2=scanner.nextInt();
                         if(pilihan2==1){
                             System.out.print("Masukkan jumlah baris: ");
@@ -392,7 +396,56 @@ public class menu {
 
             break;
             case 4:
-            break;
+                System.out.println("Silakan pilih input matriks: " );
+                System.out.println("1. Masukan dari Keyboard" );
+                System.out.printf("2. Masukan dari File (.txt)" );
+                
+                System.out.println("Masukkan Pilihan Anda (1/2):" );
+                scanner.nextLine();
+                pilihan2=scanner.nextInt();
+
+                if(pilihan2==1){
+                    int n = scanner.nextInt();
+                    matriks Mat = new matriks(n, 2);
+                    Mat.ReadMat();
+                    double[][] mat = Mat.toDoubleArray();
+                    double x = scanner.nextDouble();
+                    double[] a = InterPolinom.OperasiPolinom(n, InterPolinom.UbahKeAug(n, mat));
+                    System.out.printf("f(x) = ");
+                    for(int i=n-1; i>=0; i--){
+                        System.out.printf("%.4f", a[i]);
+                        if(i != 0){
+                            System.out.printf("x", i);
+                            if(i != 1) System.out.printf("^%d", i);
+                            System.out.printf(" + ", i);
+                        } else System.out.println();
+                    }
+                    System.out.printf("f(%.1f) = %.4f", x, InterPolinom.Hitung(n, a, x));
+                } else if (pilihan2==2){
+                    System.out.printf("Masukkan nama file (akhiran .txt): ");
+                    String file_nama = scanner.nextLine();
+
+                    try {
+                        int n = scanner.nextInt();
+                        matriks Mat = new matriks(file_nama, n);
+                        double[][] mat = Mat.toDoubleArray();
+                        double x = Mat.getX();
+                        double[] a = InterPolinom.OperasiPolinom(n, InterPolinom.UbahKeAug(n, mat));
+                        System.out.printf("f(x) = ");
+                        for(int i=n-1; i>=0; i--){
+                            System.out.printf("%.4f", a[i]);
+                            if(i != 0){
+                                System.out.printf("x", i);
+                                if(i != 1) System.out.printf("^%d", i);
+                                System.out.printf(" + ", i);
+                            } else System.out.println();
+                        }
+                        System.out.printf("f(%.1f) = %.4f", x, InterPolinom.Hitung(n, a, x));
+                    } catch (FileNotFoundException e){
+                        System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
+                    }
+                }
+                break;
             case 5:
                 System.out.printf("Silakan masukan file text (.txt): " );
                 String file_nama = scanner.nextLine();        
