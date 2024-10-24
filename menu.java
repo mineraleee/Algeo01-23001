@@ -16,7 +16,7 @@ public class menu {
         System.out.println("7. Keluar" );
 
         Scanner scanner = new Scanner(System.in);
-        System.out.printf("Masukkan Pilihan Anda (1/2/etc):" );
+        System.out.printf("Masukkan Pilihan Anda (1/2/etc): " );
         int opsi = scanner.nextInt();
         scanner.nextLine();
 
@@ -485,7 +485,7 @@ public class menu {
                 System.out.println("2. Metode Matriks Adjoin" );
                 pilihan1 = scanner.nextInt();
                 while (pilihan1 != 1 && pilihan1 != 2){
-                    System.out.printf("Masukkan Pilihan Anda (1/2):" );
+                    System.out.printf("Masukkan Pilihan Anda (1/2): " );
                     pilihan1 = scanner.nextInt();
                 }
                 switch (pilihan1) {
@@ -498,7 +498,7 @@ public class menu {
                         pilihan2=scanner.nextInt();
                         scanner.nextLine();
                         while (pilihan2 != 1 && pilihan2 != 2){
-                            System.out.printf("Masukkan Pilihan Anda (1/2):" );
+                            System.out.printf("Masukkan Pilihan Anda (1/2): " );
                             pilihan2 = scanner.nextInt();
                         }
                         if(pilihan2==1){
@@ -582,13 +582,13 @@ public class menu {
                     case 2:
                         System.out.println("Silakan pilih input matriks: " );
                         System.out.println("1. Masukan dari Keyboard" );
-                        System.out.printf("2. Masukan dari File (.txt)" );
+                        System.out.printf("2. Masukan dari File (.txt)\n" );
 
-                        System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        System.out.println("Masukkan Pilihan Anda (1/2): " );
                         pilihan2=scanner.nextInt();
                         scanner.nextLine();
                         while (pilihan2 != 1 && pilihan2 != 2){
-                            System.out.printf("Masukkan Pilihan Anda (1/2):" );
+                            System.out.printf("Masukkan Pilihan Anda (1/2): " );
                             pilihan2 = scanner.nextInt();
                         }
                         if(pilihan2==1){
@@ -844,24 +844,24 @@ public class menu {
                 System.out.println("1. Regresi Linier Berganda" );
                 System.out.println("2. Regresi Kuadratik Berganda" );
 
-                System.out.printf("Masukkan Pilihan Anda (1/2):" );
+                System.out.printf("Masukkan Pilihan Anda (1/2): " );
                 pilihan1 = scanner.nextInt();
                 scanner.nextLine();
                 while (pilihan1 != 1 && pilihan1 != 2){
-                    System.out.printf("Masukkan Pilihan Anda (1/2):" );
+                    System.out.printf("Masukkan Pilihan Anda (1/2): " );
                     pilihan1 = scanner.nextInt();
                 }
                 switch (pilihan1){
                     case 1:
                         System.out.println("Silakan pilih input matriks: " );
                         System.out.println("1. Masukan dari Keyboard" );
-                        System.out.printf("2. Masukan dari File (.txt)" );
+                        System.out.printf("2. Masukan dari File (.txt)\n" );
 
-                        System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        System.out.println("Masukkan Pilihan Anda (1/2): " );
                         pilihan2=scanner.nextInt();
                         scanner.nextLine();
                         while (pilihan2 != 1 && pilihan2 != 2){
-                            System.out.printf("Masukkan Pilihan Anda (1/2):" );
+                            System.out.printf("Masukkan Pilihan Anda (1/2): " );
                             pilihan2 = scanner.nextInt();
                         }
                         if (pilihan2==1){
@@ -957,13 +957,13 @@ public class menu {
                     case 2:
                         System.out.println("Silakan pilih input matriks: " );
                         System.out.println("1. Masukan dari Keyboard" );
-                        System.out.printf("2. Masukan dari File (.txt)" );
+                        System.out.printf("2. Masukan dari File (.txt)\n" );
 
-                        System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        System.out.println("Masukkan Pilihan Anda (1/2): " );
                         pilihan2=scanner.nextInt();
                         scanner.nextLine();
                         while (pilihan2 != 1 && pilihan2 != 2){
-                            System.out.printf("Masukkan Pilihan Anda (1/2):" );
+                            System.out.printf("Masukkan Pilihan Anda (1/2): " );
                             pilihan2 = scanner.nextInt();
                         }
                         if (pilihan2==1){
@@ -1117,6 +1117,8 @@ public class menu {
                         }
                 }
             break;
+            default : 
+            System.err.printf("BAIBAI, VADEL!\n");
         }
     }
 }
