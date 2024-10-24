@@ -29,10 +29,10 @@ public class InverseSPL {
     }
 
     // Metode untuk menghitung solusi SPL
-    public static double[][] OperasiInverse(double[][] mat, int m, int n) {
+    public static double[] OperasiInverse(double[][] mat, int m, int n) {
         double[][] temp = new double[m][m];  // Matriks m x m untuk menyimpan koefisien
         double[] b = new double[m];          // Vektor solusi b
-        double[][] res = new double[m][1];   // Hasil solusi matriks
+        double[] res = new double[m];   // Hasil solusi matriks
 
         // Pisahkan matriks A dan vektor b dari mat
         for (int i = 0; i < m; i++) {
@@ -60,9 +60,9 @@ public class InverseSPL {
 
         // Hitung hasil Ax = b
         for (int i = 0; i < m; i++) {
-            res[i][0] = 0;
+            res[i] = 0;
             for (int j = 0; j < m; j++) {
-                res[i][0] += InvA[i][j] * b[j];
+                res[i] += InvA[i][j] * b[j];
             }
         }
 
@@ -111,13 +111,13 @@ public class InverseSPL {
         int n = 3;  // Jumlah variabel (kolom A)
 
         // Hitung solusi SPL menggunakan invers matriks
-        double[][] result = OperasiInverse(mat, m, n);
+        double[] result = OperasiInverse(mat, m, n);
 
         // Jika hasil tidak null, cetak hasil solusi
         if (result != null) {
             System.out.println("Solusi dari SPL adalah:");
             for (int i = 0; i < m; i++) {
-                System.out.printf("x%d = %.2f\n", i + 1, result[i][0]);
+                System.out.printf("x%d = %.2f\n", i + 1, result[i]);
             }
         }
     }

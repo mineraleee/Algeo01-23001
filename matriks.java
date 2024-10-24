@@ -201,7 +201,7 @@ public class matriks { //class
                 this.mat[i][j] = scan.nextDouble(); //input
             }
         }
-    }
+    }   
 
     /* Tampilkan Matriks ke Layar */
     public void PrintMat (){

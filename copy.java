@@ -1,6 +1,6 @@
 public class InverseSPL {
 
-    public static double[][] OperasiInverse(double[][] mat, int m, int n) {
+    public static double[] OperasiInverse(double[][] mat, int m, int n) {
         double[][] temp = new double[m][m];  // Matriks m x m untuk menyimpan koefisien
         double[] b = new double[m];          // Vektor solusi b
         double[][] res = new double[m][1];   // Hasil solusi matriks
