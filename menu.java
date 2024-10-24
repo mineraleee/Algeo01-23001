@@ -182,24 +182,25 @@ public class menu {
                 System.out.println("1. Determinan Menggunakan OBE" );
                 System.out.println("2. Determinan Kofaktor" );
 
-                System.out.printf("Masukkan Pilihan Anda (1/2/etc):" );
+                System.out.printf("Masukkan Pilihan Anda (1/2/etc): " );
                 int pilihan2 = scanner.nextInt();
                 scanner.nextLine();
                 double det = 0;
 
                 while (pilihan2 != 1 && pilihan2 != 2){
-                    System.out.printf("Masukkan Pilihan Anda (1/2/etc):" );
+                    System.out.println("Masukkan Pilihan Anda (1/2/etc): " );
                     pilihan2 = scanner.nextInt();
                 }
                 switch (pilihan2) {
                     case 1:
                         System.out.println("Silakan pilih input matriks: " );
                         System.out.println("1. Masukan dari Keyboard" );
-                        System.out.printf("2. Masukan dari File (.txt)" );
+                        System.out.println("2. Masukan dari File (.txt)" );
 
-                        System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        System.out.printf("Masukkan Pilihan Anda (1/2): " );
                         scanner.nextLine();
                         int pilihan3 = scanner.nextInt();
+                        scanner.nextLine();
                         if (pilihan3 == 1){
                             System.out.print("Masukkan jumlah baris/kolom: ");
                             int baris = scanner.nextInt();
@@ -207,6 +208,18 @@ public class menu {
                             Mat.ReadMat();
                             det = Determinan.determinantOBE(Mat,baris);
                             System.out.printf("Determinan dari matriks tersebut: %.2f", det);
+                            System.out.println();
+                            System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                            scanner.nextLine();
+                            String file = scanner.nextLine();
+                            if (file.equals("y")) {
+                                String str = String.format("%.2f", det);
+                                try{
+                                    matriks.simpan(str);
+                                } catch (IOException e){
+                                    System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                                }
+                            }
                         } else if (pilihan3 == 2){
                             System.out.printf("Masukkan nama file (akhiran .txt): ");
                             String file_nama = scanner.nextLine();
@@ -216,6 +229,20 @@ public class menu {
                                 int baris = Mat.baris;
                                 det = Determinan.determinantOBE(Mat,baris);
                                 System.out.printf("Determinan dari matriks tersebut: %.2f", det);
+
+                                System.out.println();
+                                System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                                scanner.nextLine();
+
+                                String file = scanner.nextLine();
+                                if (file.equals("y")) {
+                                    String str = String.format("%.2f", det);
+                                    try{
+                                        matriks.simpan(str);
+                                    } catch (IOException e){
+                                        System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                                    }
+                                }
                             } catch (FileNotFoundException e){
                                 System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
                             }
@@ -224,11 +251,13 @@ public class menu {
                     case 2:
                         System.out.println("Silakan pilih input matriks: " );
                         System.out.println("1. Masukan dari Keyboard" );
-                        System.out.printf("2. Masukan dari File (.txt)" );
+                        System.out.println("2. Masukan dari File (.txt)" );
 
-                        System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        System.out.printf("Masukkan Pilihan Anda (1/2): " );
                         scanner.nextLine();
                         int pilihan4 = scanner.nextInt();
+                        scanner.nextLine();
+
                         if (pilihan4 == 1){
                             System.out.print("Masukkan jumlah baris/kolom: ");
                             int baris = scanner.nextInt();
@@ -237,22 +266,48 @@ public class menu {
                             Mat.ReadMat();
                             det = Determinan.determinanKofaktor(Mat,baris);
                             System.out.printf("Determinan dari matriks tersebut: %.2f", det);
+
+                            System.out.println();
+                            System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                            scanner.nextLine();
+                            String file = scanner.nextLine();
+                            if (file.equals("y")) {
+                                String str = String.format("%.2f", det);
+                                try{
+                                    matriks.simpan(str);
+                                } catch (IOException e){
+                                    System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                                }
+                            }
+
                         } else if (pilihan4 == 2){
                             System.out.printf("Masukkan nama file (akhiran .txt): ");
                             String file_nama = scanner.nextLine();
-                            
                             try {
                                 matriks Mat = new matriks(file_nama);
                                 int baris = Mat.baris;
                                 det = Determinan.determinanKofaktor(Mat,baris);
                                 System.out.printf("Determinan dari matriks tersebut: %.2f", det);
+
+                                System.out.println();
+                                System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                                scanner.nextLine();
+                                String file = scanner.nextLine();
+                                if (file.equals("y")) {
+                                    String str = String.format("%.2f", det);
+                                    try{
+                                        matriks.simpan(str);
+                                    } catch (IOException e){
+                                        System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                                    }
+                                }
                             } catch (FileNotFoundException e){
                                 System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
                             }
                         }
                         break;
                 }
-
+            break;
             case 3:
                 System.out.println("1. Metode OBE" );
                 System.out.println("2. Metode Matriks Adjoin" );
@@ -265,32 +320,33 @@ public class menu {
                     case 1:
                         System.out.println("Silakan pilih input matriks: " );
                         System.out.println("1. Masukan dari Keyboard" );
-                        System.out.printf("2. Masukan dari File (.txt)" );
+                        System.out.printf("2. Masukan dari File (.txt)\n" );
 
-                        System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        System.out.printf("Masukkan Pilihan Anda (1/2): " );
                         scanner.nextLine();
                         pilihan2=scanner.nextInt();
+                        scanner.nextLine();
+                        while (pilihan2 != 1 && pilihan2 != 2){
+                            System.out.printf("Masukkan Pilihan Anda (1/2):" );
+                            pilihan2 = scanner.nextInt();
+                        }
                         if(pilihan2==1){
-                            System.out.print("Masukkan jumlah baris: ");
+                            System.out.print("Masukkan jumlah baris/kolom: ");
                             int baris = scanner.nextInt();
-                            System.out.print("Masukkan jumlah kolom: ");
-                            int kolom = scanner.nextInt();
-                            
-                            while (baris!=kolom){
-                                System.out.print("Matriks harus merupakan matriks persegi");
-                                System.out.print("Masukkan jumlah baris: ");
+                            while (baris<=0){
+                                System.out.printf("Jumlah minimal baris/kolom = 1");
+                                System.out.print("Masukkan jumlah baris/kolom: ");
                                 baris = scanner.nextInt();
-                                System.out.print("Masukkan jumlah kolom: ");
-                                kolom = scanner.nextInt();
                             }
-                            double[][] mat = new double[baris][kolom];
+                        
+                            double[][] mat = new double[baris][baris];
                             matriks Mat = new matriks(mat);
                             Mat.ReadMat();
                             mat = Mat.toDoubleArray();
                             try {
-                                double[][] inverse = InverseOBE.inverseGaussJordan(mat, baris, kolom);
+                                double[][] inverse = InverseOBE.inverseGaussJordan(mat, baris, baris);
                                 for (int i = 0; i < baris; i++) {
-                                    for (int j = 0; j < kolom; j++) {
+                                    for (int j = 0; j < baris; j++) {
                                         System.out.printf("%.2f ", inverse[i][j]);
                                     }
                                     System.out.println();
@@ -336,20 +392,21 @@ public class menu {
                         System.out.println("Masukkan Pilihan Anda (1/2):" );
                         scanner.nextLine();
                         pilihan2=scanner.nextInt();
+                        scanner.nextLine();
+                        while (pilihan2 != 1 && pilihan2 != 2){
+                            System.out.printf("Masukkan Pilihan Anda (1/2):" );
+                            pilihan2 = scanner.nextInt();
+                        }
                         if(pilihan2==1){
-                            System.out.print("Masukkan jumlah baris: ");
+                            System.out.print("Masukkan jumlah baris/kolom: ");
                             int baris = scanner.nextInt();
-                            System.out.print("Masukkan jumlah kolom: ");
-                            int kolom = scanner.nextInt();
-                            
-                            while (baris!=kolom){
-                                System.out.print("Matriks harus merupakan matriks persegi");
-                                System.out.print("Masukkan jumlah baris: ");
+                            while (baris<=0){
+                                System.out.printf("Jumlah minimal baris/kolom = 1");
+                                System.out.print("Masukkan jumlah baris/kolom: ");
                                 baris = scanner.nextInt();
-                                System.out.print("Masukkan jumlah kolom: ");
-                                kolom = scanner.nextInt();
                             }
-                            double[][] mat = new double[baris][kolom];
+
+                            double[][] mat = new double[baris][baris];
                             matriks Mat = new matriks(mat);
                             Mat.ReadMat();
                             try {
@@ -393,7 +450,6 @@ public class menu {
                         }
                         break;
                 }
-
             break;
             case 4:
                 System.out.println("Silakan pilih input matriks: " );
@@ -447,38 +503,306 @@ public class menu {
                 }
                 break;
             case 5:
-                System.out.printf("Silakan masukan file text (.txt): " );
-                String file_nama = scanner.nextLine();        
+                System.out.println("Silakan pilih input matriks: " );
+                System.out.println("1. Masukan dari Keyboard" );
+                System.out.println("2. Masukan dari File (.txt)" );
+
+                System.out.printf("Masukkan Pilihan Anda (1/2): " );
+                int pilihan3 = scanner.nextInt();
+                scanner.nextLine();
+                if (pilihan3 == 1){
+                    matriks Mat= new matriks(4, 4);
+                    Mat.ReadMat();
+                    System.out.printf("Masukkan x: " );
+                    Double x = scanner.nextDouble();
+                    scanner.nextLine();
+
+                    System.out.printf("Masukkan y: " );
+                    Double y = scanner.nextDouble();
+                    scanner.nextLine();
+
+                    Double hasil = Bicubic.hasil_Bicubic_Akhir(Mat, x, y);
+                    System.out.printf("Hasil Binterpolasi Bicubic: %.2f\n", hasil );
+                    
+                    System.out.println();
+                    System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                    scanner.nextLine();
+                        String file = scanner.nextLine();
+                        if (file.equals("y")) {
+                            String str = String.format("%.2f", hasil);
+                            try{
+                                matriks.simpan(str);
+                            } catch (IOException e){
+                                System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+                            }
+                        }
+                    
+                } else if (pilihan3 == 2){
+                    System.out.printf("Silakan masukan file text (.txt): " );
+                    String file_nama = scanner.nextLine();     
                     try {
                         matriks Mat = new matriks(file_nama,4);
-                        
                         Double valueX = Mat.getX();
                         Double valueY = Mat.getY();
                         Double hasil = Bicubic.hasil_Bicubic_Akhir(Mat, valueX, valueY);
-                        System.out.printf("Hasil Binterpolasi Bicubic: %.2f", hasil );
+                        System.out.printf("Hasil Binterpolasi Bicubic: %.2f\n", hasil );
 
-                        System.out.printf("Apakah ingin menyimpann hasil operasi ke file? (y/n)" );
+                        System.out.println();
+                        System.out.printf("Apakah ingin menyimpan hasil operasi ke file (y/n)? " );
+                        scanner.nextLine();
+
                         String file = scanner.nextLine();
-                        if (file.equals("y")){
-                            String fileContent = "";
-                            while (scanner.hasNextLine()){
-                                fileContent = fileContent.concat(scanner.nextLine()+"\n");
-                            }
-                            try {
-                                FileWriter writer = new FileWriter ("newfile.txt");
-                                writer.write(fileContent);
-                                writer.close();
+                        if (file.equals("y")) {
+                            String str = String.format("%.2f", hasil);
+                            try{
+                                matriks.simpan(str);
                             } catch (IOException e){
-                                System.out.println("Terjadi kesalahan. " + e.getMessage());
+                                System.out.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
                             }
-                    
                         }
                     } catch (FileNotFoundException e){
                         System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
                     }
+                }
             break;
-            default:
-                break;
+            case 6:
+                System.out.println("1. Regresi Linier Berganda" );
+                System.out.println("2. Regresi Kuadratik Berganda" );
+
+                System.out.printf("Masukkan Pilihan Anda (1/2):" );
+                pilihan1 = scanner.nextInt();
+                scanner.nextLine();
+                while (pilihan1 != 1 && pilihan1 != 2){
+                    System.out.printf("Masukkan Pilihan Anda (1/2):" );
+                    pilihan1 = scanner.nextInt();
+                }
+                switch (pilihan1){
+                    case 1:
+                        System.out.println("Silakan pilih input matriks: " );
+                        System.out.println("1. Masukan dari Keyboard" );
+                        System.out.printf("2. Masukan dari File (.txt)" );
+
+                        System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        pilihan2=scanner.nextInt();
+                        scanner.nextLine();
+                        while (pilihan2 != 1 && pilihan2 != 2){
+                            System.out.printf("Masukkan Pilihan Anda (1/2):" );
+                            pilihan2 = scanner.nextInt();
+                        }
+                        if (pilihan2==1){
+                            System.out.print("Masukkan jumlah peubah x/n: ");
+                            int n=scanner.nextInt();
+                            while (n<=1){
+                                System.out.print("Jumlah minimal peubah x = 2");
+                                System.out.print("Masukkan jumlah peubah x/n: ");
+                                n=scanner.nextInt();
+                            }
+                            System.out.print("Masukkan jumlah sampel/m: ");
+                            int m=scanner.nextInt();
+                            while (m<=1){
+                                System.out.print("Jumlah minimal sampel m = 1");
+                                System.out.print("Masukkan jumlah sampel/m: ");
+                                m=scanner.nextInt();
+                            }
+                            double[][] data_X = new double[m][n];
+                            matriks Mat_X = new matriks(data_X);
+                            Mat_X.ReadMat();
+                            data_X=Mat_X.toDoubleArray();
+
+                            double[] data_Y = new double[m];
+                            System.out.println("Masukkan data y: ");
+                            for (int i=0;i<m;i++){
+                                data_Y[i]=scanner.nextDouble();
+                            }
+
+                            double[] koefisien= RegresiLinierBerganda.multipleLinierRegression(data_X, data_Y);
+                            System.out.printf("f(x) = %.4f", koefisien[0]); // konstanta/intersep
+                            for (int i = 1; i < koefisien.length; i++) {
+                                if (koefisien[i] >= 0) {
+                                    System.out.printf(" + %.4fx%d", koefisien[i], i);
+                                } else {
+                                    System.out.printf(" - %.4fx%d", Math.abs(koefisien[i]), i);
+                                }
+                            }
+                            System.out.println();
+                        } else if (pilihan2==2){
+                            System.out.printf("Masukkan nama file (akhiran .txt): ");
+                            String file_nama = scanner.nextLine();
+
+                            try {
+                                matriks Mat = new matriks(file_nama);
+                                int baris = Mat.baris;
+                                int kolom = Mat.kolom;
+                                double[][] data_X = new double[baris][kolom-1];
+                                for (int i=0;i<baris;i++){
+                                    for (int j=0;j<kolom-1;j++){
+                                        data_X[i][j]= Mat.mat[i][j];
+                                    }
+                                }
+                                double[] data_Y = new double[baris];
+                                for (int i=0;i<baris;i++){
+                                    for (int j=0;j<1;j++){
+                                        data_Y[i]= Mat.mat[i][j];
+                                    }
+                                }
+
+                                double[] koefisien= RegresiLinierBerganda.multipleLinierRegression(data_X, data_Y);
+                                System.out.printf("f(x) = %.4f", koefisien[0]); // konstanta/intersep
+                                for (int i = 1; i < koefisien.length; i++) {
+                                    if (koefisien[i] >= 0) {
+                                        System.out.printf(" + %.4fx%d", koefisien[i], i);
+                                    } else {
+                                        System.out.printf(" - %.4fx%d", Math.abs(koefisien[i]), i);
+                                    }
+                                }
+                                System.out.println();
+                            } catch (FileNotFoundException e){
+                                System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
+                            }
+                        }
+                        break;
+                    case 2:
+                        System.out.println("Silakan pilih input matriks: " );
+                        System.out.println("1. Masukan dari Keyboard" );
+                        System.out.printf("2. Masukan dari File (.txt)" );
+
+                        System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        pilihan2=scanner.nextInt();
+                        scanner.nextLine();
+                        while (pilihan2 != 1 && pilihan2 != 2){
+                            System.out.printf("Masukkan Pilihan Anda (1/2):" );
+                            pilihan2 = scanner.nextInt();
+                        }
+                        if (pilihan2==1){
+                            System.out.print("Masukkan jumlah peubah x/n: ");
+                            int n=scanner.nextInt();
+                            while (n<=1){
+                                System.out.print("Jumlah minimal peubah x = 2");
+                                System.out.print("Masukkan jumlah peubah x/n: ");
+                                n=scanner.nextInt();
+                            }
+                            System.out.print("Masukkan jumlah sampel/m: ");
+                            int m=scanner.nextInt();
+                            while (m<=1){
+                                System.out.print("Jumlah minimal sampel m = 1");
+                                System.out.print("Masukkan jumlah sampel/m: ");
+                                m=scanner.nextInt();
+                            }
+                            double[][] data_X = new double[m][n];
+                            matriks Mat_X = new matriks(data_X);
+                            Mat_X.ReadMat();
+                            data_X=Mat_X.toDoubleArray();
+
+                            double[] data_Y = new double[m];
+                            System.out.println("Masukkan data y: ");
+                            for (int i=0;i<m;i++){
+                                data_Y[i]=scanner.nextDouble();
+                            }
+
+                            int dimensi = 1+n+((n*(n+1))/2); //ukuran matriks dengan 1 konstan N, n variabel linier, n variabel kuadrat, dan nC2 variabel interaksi
+                            double[] koefisien= RegresiKuadratikBerganda.multipleQuadraticRegression(data_X, data_Y);
+                            String[] peubah = {"p","q","r","s","t","u", "v", "w",}; // Daftar variabel, bisa ditambah sesuai kebutuhan
+                            String[] variabel= new String[dimensi-1];
+
+                            // Cetak representasi kombinasi variabel
+                            int i,j,idx;
+                            for (i=0;i<n;i++){
+                                variabel[i]=peubah[i]; //n variabel linier
+                            }
+                            idx=n;
+                            for (i=0;i<n;i++){
+                                for(j=i;j<n;j++){
+                                    if (peubah[i]==peubah[j]){
+                                        variabel[idx]=peubah[i]+"^2";
+                                    }
+                                    else{
+                                        variabel[idx]=peubah[i]+peubah[j];
+                                    }
+                                    idx++;
+                                }
+                            }
+
+                            for (i = 0; i < dimensi-1; i++) {
+                                System.out.println("x"+(i+1)+ " = " + variabel[i]);
+                            }
+
+                            // Cetak polinomial dengan kombinasi tersebut
+                            System.out.printf("f(x) = %.4f", koefisien[0]); // Konstanta/intersep
+
+                            for (i = 1; i < koefisien.length; i++) {
+                                if (koefisien[i] >= 0) {
+                                    System.out.printf(" + %.4fx%d", koefisien[i], i);
+                                } else {
+                                    System.out.printf(" - %.4fx%d", Math.abs(koefisien[i]), i);
+                                }
+                            }
+                            System.out.println();
+                        } else if (pilihan2==2){
+                            System.out.printf("Masukkan nama file (akhiran .txt): ");
+                            String file_nama = scanner.nextLine();
+
+                            try {
+                                matriks Mat = new matriks(file_nama);
+                                int baris = Mat.baris;
+                                int kolom = Mat.kolom;
+                                double[][] data_X = new double[baris][kolom-1];
+                                for (int i=0;i<baris;i++){
+                                    for (int j=0;j<kolom-1;j++){
+                                        data_X[i][j]= Mat.mat[i][j];
+                                    }
+                                }
+                                double[] data_Y = new double[baris];
+                                for (int i=0;i<baris;i++){
+                                    for (int j=0;j<1;j++){
+                                        data_Y[i]= Mat.mat[i][j];
+                                    }
+                                }
+
+                                int n = data_X[0].length;
+                                int dimensi = 1+n+((n*(n+1))/2); //ukuran matriks dengan 1 konstan N, n variabel linier, n variabel kuadrat, dan nC2 variabel interaksi
+                                double[] koefisien= RegresiKuadratikBerganda.multipleQuadraticRegression(data_X, data_Y);
+                                String[] peubah = {"p","q","r","s","t","u", "v", "w",}; // Daftar variabel, bisa ditambah sesuai kebutuhan
+                                String[] variabel= new String[dimensi-1];
+
+                                // Cetak representasi kombinasi variabel
+                                int i,j,idx;
+                                for (i=0;i<n;i++){
+                                    variabel[i]=peubah[i]; //n variabel linier
+                                }
+                                idx=n;
+                                for (i=0;i<n;i++){
+                                    for(j=i;j<n;j++){
+                                        if (peubah[i]==peubah[j]){
+                                            variabel[idx]=peubah[i]+"^2";
+                                        }
+                                        else{
+                                            variabel[idx]=peubah[i]+peubah[j];
+                                        }
+                                        idx++;
+                                    }
+                                }
+
+                                for (i = 0; i < dimensi-1; i++) {
+                                    System.out.println("x"+(i+1)+ " = " + variabel[i]);
+                                }
+
+                                // Cetak polinomial dengan kombinasi tersebut
+                                System.out.printf("f(x) = %.4f", koefisien[0]); // Konstanta/intersep
+
+                                for (i = 1; i < koefisien.length; i++) {
+                                    if (koefisien[i] >= 0) {
+                                        System.out.printf(" + %.4fx%d", koefisien[i], i);
+                                    } else {
+                                        System.out.printf(" - %.4fx%d", Math.abs(koefisien[i]), i);
+                                    }
+                                }
+                                System.out.println();
+                            } catch (FileNotFoundException e){
+                                System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
+                            }
+                        }
+                }
+            break;
         }
     }
 }

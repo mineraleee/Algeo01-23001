@@ -1,7 +1,9 @@
 import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 
 public class matriks { //class
     Scanner scan = new Scanner (System.in); //kelas untuk menerima input
@@ -84,13 +86,21 @@ public class matriks { //class
             }
         }
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> d79a71dc760ce417b3cc53ab85d9d2374b58462f
     public matriks(String file_name, int n) throws FileNotFoundException {// Membaca Matriks dari sebuah file
        
         ArrayList<ArrayList<Double>> mat = new ArrayList<ArrayList<Double>>();
         File file = new File(file_name); //membuat objek file
         Scanner scan = new Scanner(file); //membaca isi dari file
 
+<<<<<<< HEAD
         for (int i = 0; i < n && scan.hasNextLine(); i++) {
+=======
+        for (int i = 0; i < 4 && scan.hasNextLine(); i++) {
+>>>>>>> d79a71dc760ce417b3cc53ab85d9d2374b58462f
             mat.add(new ArrayList<Double>()); //menambahkan ArrayList untuk tiap penambahan baris
             String input_baris = scan.nextLine(); //baca baris
             Scanner scan_baris = new Scanner(input_baris);
@@ -128,11 +138,23 @@ public class matriks { //class
     }  
 
     public double getX() {
-        return this.x;
+        return x;
     }
 
     public double getY() {
-        return this.y;
+        return y;
+    }
+
+
+    public static void simpan (String content) throws IOException{
+        Scanner scan = new Scanner(System.in);
+        System.out.printf("Simpan dengan Nama File (sertakan akhiran .txt): ");
+        String fileSimpan = scan.nextLine();
+
+        FileWriter writer = new FileWriter(fileSimpan);
+        writer.write(content);
+        writer.close();
+        scan.close();
     }
 
     /*SELEKTOR*/
@@ -164,7 +186,7 @@ public class matriks { //class
             for (int j=0; j<this.kolom;j++){
                 this.mat[i][j] = scan.nextDouble(); //input
             }
-        } System.out.println("\n"); //line baru
+        }
     }
 
     /* Tampilkan Matriks ke Layar */
