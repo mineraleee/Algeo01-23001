@@ -230,4 +230,7 @@ public class matriks { //class
             I.mat[i][i]=1; 
         } return I;
     }
+    public void ChangeVal(int m, int n, double k){
+        mat[m][n] = k;
+    }
 }

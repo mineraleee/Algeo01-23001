@@ -26,12 +26,13 @@ public class menu {
                 System.out.println("2. Metode Eliminasi Gauss-Jordan" );
                 System.out.println("3. Metode Matriks Balikan" );
                 System.out.println("4. Kaidah Cramer" );
-
+                int pilihan1 = scanner.nextInt();
                 while (pilihan1 != 1 && pilihan1 != 2 && pilihan1 != 3 && pilihan1 != 4){
                     System.out.printf("Masukkan Pilihan Anda (1/2/etc):" );
-                    pilihan1 = scanner.nextInt();    
-                    switch (pilihan1) {
-                        case 1:
+                    pilihan1 = scanner.nextInt(); 
+                }   
+                switch (pilihan1) {
+                    case 1:
                         System.out.println("Silakan pilih input matriks: " );
                         System.out.println("1. Masukan dari Keyboard" );
                         System.out.printf("2. Masukan dari File (.txt)" );
@@ -41,33 +42,137 @@ public class menu {
                         if (pilihan3 == 1){
                             System.out.print("Masukkan jumlah baris/kolom: ");
                             int baris = scanner.nextInt();
-                            matriks Mat= new matriks(baris, baris);
+                            matriks Mat = new matriks(baris, baris);
                             Mat.ReadMat();
-                            det = Determinan.determinantOBE(Mat,baris);
-                            System.out.printf("Determinan dari matriks tersebut: %.2f", det);
+                            double[][] mat = Mat.toDoubleArray();
+                            int flag = Gauss.OperasiGauss(mat, Mat.baris, Mat.kolom, 0);
+                            if(flag == 1){
+                                flag = Gauss.Cek(mat, Mat.baris, Mat.kolom, flag);
+                                if(flag == 2){
+                                    Gauss.SubstitusiParametrik(mat, Mat.baris, Mat.kolom);
+                                }
+                                else if(flag == 3) System.out.println("Tidak ada solusi.");
+                            }else{
+                                for (int i=0; i<Mat.baris; i++) {
+                                    System.out.printf("x%d = %.2f\n", i+1, mat[i][Mat.kolom]/mat[i][i]); //konstanta dibagi dengan pivot
+                                }
+                            }
                         } else if (pilihan3 == 2){
                             System.out.printf("Masukkan nama file (akhiran .txt): ");
                             String file_nama = scanner.nextLine();
                             
                             try {
                                 matriks Mat = new matriks(file_nama);
-                                int baris = Mat.baris;
-                                det = Determinan.determinantOBE(Mat,baris);
-                                System.out.printf("Determinan dari matriks tersebut: %.2f", det);
+                                double[][] mat = Mat.toDoubleArray();
+                                int flag = Gauss.OperasiGauss(mat, Mat.baris, Mat.kolom, 0);
+                                if(flag == 1){
+                                    flag = Gauss.Cek(mat, Mat.baris, Mat.kolom, flag);
+                                    if(flag == 2){
+                                        Gauss.SubstitusiParametrik(mat, Mat.baris, Mat.kolom);
+                                    }
+                                    else if(flag == 3) System.out.println("Tidak ada solusi.");
+                                }else{
+                                    for (int i=0; i<Mat.baris; i++) {
+                                        System.out.printf("x%d = %.2f\n", i+1, mat[i][Mat.kolom]/mat[i][i]); //konstanta dibagi dengan pivot
+                                    }
+                                }
                             } catch (FileNotFoundException e){
                                 System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
                             }
                         }
-                            break;
-                        case 2:
-                            break;
-                        case 3:
-                            break;
-                        case 4:
-                            break;
-                        default:
-                            break;
-                    }
+                        break;
+                    case 2:
+                        System.out.println("Silakan pilih input matriks: " );
+                        System.out.println("1. Masukan dari Keyboard" );
+                        System.out.printf("2. Masukan dari File (.txt)" );
+
+                        System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        pilihan3 = scanner.nextInt();
+                        if (pilihan3 == 1){
+                            System.out.print("Masukkan jumlah baris/kolom: ");
+                            int baris = scanner.nextInt();
+                            matriks Mat = new matriks(baris, baris);
+                            Mat.ReadMat();
+                            double[][] mat = Mat.toDoubleArray();
+                            int flag = GaussJordan.OperasiGaussJordan(mat, Mat.baris, Mat.kolom, 0);
+                            if(flag == 1){
+                                flag = GaussJordan.Cek(mat, Mat.baris, Mat.kolom, flag);
+                                if(flag == 2){
+                                    GaussJordan.SubstitusiParametrik(mat, Mat.baris, Mat.kolom);
+                                }
+                                else if(flag == 3) System.out.println("Tidak ada solusi.");
+                            }else{
+                                for (int i=0; i<Mat.baris; i++) {
+                                    System.out.printf("x%d = %.2f\n", i+1, mat[i][Mat.kolom]/mat[i][i]); //konstanta dibagi dengan pivot
+                                }
+                            }
+                        }else if(pilihan3 == 2){
+                            System.out.printf("Masukkan nama file (akhiran .txt): ");
+                            String file_nama = scanner.nextLine();
+                            
+                            try {
+                                matriks Mat = new matriks(file_nama);
+                                double[][] mat = Mat.toDoubleArray();
+                                int flag = GaussJordan.OperasiGaussJordan(mat, Mat.baris, Mat.kolom, 0);
+                                if(flag == 1){
+                                    flag = GaussJordan.Cek(mat, Mat.baris, Mat.kolom, flag);
+                                    if(flag == 2){
+                                        GaussJordan.SubstitusiParametrik(mat, Mat.baris, Mat.kolom);
+                                    }
+                                    else if(flag == 3) System.out.println("Tidak ada solusi.");
+                                }else{
+                                    for (int i=0; i<Mat.baris; i++) {
+                                        System.out.printf("x%d = %.2f\n", i+1, mat[i][Mat.kolom]/mat[i][i]); //konstanta dibagi dengan pivot
+                                    }
+                                }
+                            } catch (FileNotFoundException e){
+                                System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
+                            }
+                        }
+                        break;
+                    case 3:
+                       break;
+                    case 4:
+                        System.out.println("Silakan pilih input matriks: " );
+                        System.out.println("1. Masukan dari Keyboard" );
+                        System.out.printf("2. Masukan dari File (.txt)" );
+
+                        System.out.println("Masukkan Pilihan Anda (1/2):" );
+                        pilihan3 = scanner.nextInt();
+                        if (pilihan3 == 1){
+                            System.out.print("Masukkan jumlah baris/kolom: ");
+                            int baris = scanner.nextInt();
+                            matriks Mat = new matriks(baris, baris);
+                            Mat.ReadMat();
+                            double[] x = new double[Mat.baris+5];
+                            int flag = Cramer.OperasiCramer(Mat, Mat.baris, x, 0);
+                            if(flag == 1){
+                                for (int i = 0; i < Mat.baris; i++) {
+                                    System.out.printf("x%d = %.2f\n", i+1, x[i]);
+                                }
+                            }else if(flag == 2) System.out.println("Solusi tak hingga.");
+                            else System.out.println("Tidak ada solusi.");
+                        } else if (pilihan3 == 2){
+                            System.out.printf("Masukkan nama file (akhiran .txt): ");
+                            String file_nama = scanner.nextLine();
+                            
+                            try {
+                                matriks Mat = new matriks(file_nama);
+                                double[] x = new double[Mat.baris+5];
+                                int flag = Cramer.OperasiCramer(Mat, Mat.baris, x, 0);
+                                if(flag == 1){
+                                    for (int i = 0; i < Mat.baris; i++) {
+                                        System.out.printf("x%d = %.2f\n", i+1, x[i]);
+                                    }
+                                }else if(flag == 2) System.out.println("Solusi tak hingga.");
+                                else System.out.println("Tidak ada solusi.");
+                            } catch (FileNotFoundException e){
+                                System.out.println("File tidak ditemukan: "+e.getMessage()); //kembalikan nama file
+                            }
+                        }
+                        break;
+                    default:
+                        break;
                 }
                 break;
             case 2:
