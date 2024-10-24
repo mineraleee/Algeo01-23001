@@ -86,21 +86,14 @@ public class matriks { //class
             }
         }
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> d79a71dc760ce417b3cc53ab85d9d2374b58462f
     public matriks(String file_name, int n) throws FileNotFoundException {// Membaca Matriks dari sebuah file
        
         ArrayList<ArrayList<Double>> mat = new ArrayList<ArrayList<Double>>();
         File file = new File(file_name); //membuat objek file
         Scanner scan = new Scanner(file); //membaca isi dari file
 
-<<<<<<< HEAD
         for (int i = 0; i < n && scan.hasNextLine(); i++) {
-=======
-        for (int i = 0; i < 4 && scan.hasNextLine(); i++) {
->>>>>>> d79a71dc760ce417b3cc53ab85d9d2374b58462f
             mat.add(new ArrayList<Double>()); //menambahkan ArrayList untuk tiap penambahan baris
             String input_baris = scan.nextLine(); //baca baris
             Scanner scan_baris = new Scanner(input_baris);
@@ -135,8 +128,28 @@ public class matriks { //class
             scan_selanjutnya.close();
         }
         scan.close();
-    }  
-
+    }
+    public static String matriksToString(double[] m) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < m.length; i++) {
+            sb.append(String.format("%.2f", m[i])); // Format nilai double ke 2 desimal
+            sb.append("\n"); // Menambahkan baris baru setelah setiap baris matriks
+        }
+        return sb.toString(); // Kembalikan string hasil konversi
+    }
+    public static String matriksToString(double[][] m) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < m.length; i++) {
+            for (int j = 0; j < m[i].length; j++) {
+                sb.append(String.format("%.2f", m[i][j])); // Format nilai double ke 2 desimal
+                if (j < m[i].length - 1) {
+                    sb.append(" "); // Menambahkan spasi antar elemen di satu baris
+                }
+            }
+            sb.append("\n"); // Menambahkan baris baru setelah setiap baris matriks
+        }
+        return sb.toString(); // Kembalikan string hasil konversi
+    }
     public double getX() {
         return x;
     }
@@ -156,6 +169,7 @@ public class matriks { //class
         writer.close();
         scan.close();
     }
+
 
     /*SELEKTOR*/
     public int GetFirstIdxBar (matriks M){
